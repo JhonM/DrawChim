@@ -1,25 +1,16 @@
 function drawSometing() {
     var drawCanvas = document.getElementById('drawCanvas');
-    var menuColor = document.getElementById('selectColor');
-    var menuStroke = document.getElementById('selectStroke');
 
-    var chooseColor = menuColor.options[menuColor.selectedIndex];
-    var chooseStroke = menuStroke.options[menuStroke.selectedIndex];
     
+    // first stain
     var ulMenu = document.getElementsByClassName('selected-stain');
-
     for (var i = 0; i < ulMenu.length; i++) {
 	var dataLi = ulMenu[i].dataset;
 	var selectedColor = dataLi.stain;
     }
-    console.log(selectedColor);
-    
-    var e = document.getElementById('red');
-    var dataLo = e.dataset.stain;
-    console.log(dataLo);
-    
-    
 
+    
+    // If user start drawing
     if (drawCanvas) {
 	var isDown = false;
 	var ctx = drawCanvas.getContext("2d");
@@ -30,8 +21,7 @@ function drawSometing() {
 	ctx.fillStyle = '#fff';
 	ctx.fillRect(0, 0, 900, 500);
 	ctx.lineWidth = 6;
-	ctx.lineWidth = chooseStroke;
-	ctx.strokeStyle = selectedColor;
+	ctx.strokeStyle = 'yellow';
 	
 	// Get colors
 	var ids = [];
@@ -43,6 +33,21 @@ function drawSometing() {
 	    if (li.id) {
 		li.onclick = function(e) {
 		    ctx.strokeStyle = this.id;
+		};
+	    }
+	}
+	
+	
+	//Get line stroke
+	var ids = [];
+	var ul = document.getElementById('line-picker');
+	var lis = ul.getElementsByTagName('li');
+	var li;
+	for (var i = 0, iLen = lis.length; i < iLen; i++) {
+	    li = lis[i];
+	    if (li.id) {
+		li.onclick = function(e) {
+		    ctx.lineWidth = this.id;
 		};
 	    }
 	}
@@ -61,7 +66,6 @@ function drawSometing() {
 	    e.preventDefault();
 	}, false);
 
-
 	drawCanvas.addEventListener('touchmove', function(e) {
 	    var touchobj = e.changedTouches[0];
 	    if (isDown !== false) {
@@ -73,7 +77,6 @@ function drawSometing() {
 	    }
 	}, false);
 
-
 	drawCanvas.addEventListener('touchend', function(e) {
 	    isDown = false;
 	    ctx.closePath();
@@ -81,7 +84,7 @@ function drawSometing() {
 	    e.preventDefault();
 	}, false);
 
-
+	// Localstore Canvas in image
 	if (window.localStorage) {
 	    img = new Image();
 	    img.onload = function() {
@@ -94,8 +97,7 @@ function drawSometing() {
 	}
     }
     
-    
-
+    //Store canvas history
     var storeHistory = function() {
 	img = drawCanvas.toDataURL("image/png");
 	history.pushState({imageData: img}, "", window.location.href);
@@ -106,39 +108,14 @@ function drawSometing() {
 
     };
 
-    menuColor.onchange = function() {
-	chooseColor = this.options[this.selectedIndex].value;
-    };
-
-    menuStroke.onchange = function() {
-	chooseStroke = this.options[this.selectedIndex].value;
-
-	if (chooseStroke === '10') {
-	    ctx.lineWidth = 10;
-	}
-	if (chooseStroke === '14') {
-	    ctx.lineWidth = 14;
-	}
-	if (chooseStroke === '18') {
-	    ctx.lineWidth = 18;
-	}
-	if (chooseStroke === '22') {
-	    ctx.lineWidth = 22;
-	}
-	if (chooseStroke === '26') {
-	    ctx.lineWidth = 26;
-	} else {
-	    ctx.lineWidth = chooseStroke;
-	}
-    };
-
+    //Clear Canvas
     var clearCanvas = document.getElementById('clearCanvas');
-
     clearCanvas.addEventListener('click', function(e) {
 	e.preventDefault();
 	ctx.clearRect(0, 0, 900, 500);
     });
 
+    //Take snapshot to save as image
     function snap() {
 	var canvas = document.getElementById('drawCanvas'),
 		//context = canvas.getContext('2d'),

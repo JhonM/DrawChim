@@ -5,7 +5,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<meta name="apple-mobile-web-app-capable" content="yes" />
 	
-        <title>Canvas sprite</title>
+        <title>DrawChim</title>
 
 	<link type="text/css" rel="stylesheet" href="css/base-draw.css"/>
 	<script type="text/javascript">
@@ -27,35 +27,21 @@
 		<li id="green" data-stain="green"><span></span></li>
 		<li id="pink" data-stain="pink"><span></span></li>
 	    </ul>
-	    <p style="float:left;">
-		Color picker:
-		<select id='selectColor'>
-		    <option id='colBlack' value='black' selected='selected'>Black</option>
-		    <option id='colRed' value='red'>Red</option>
-		    <option id='colBlue' value='blue'>Blue</option>
-		    <option id='colGreen' value='green'>Green</option>
-		    <option id='colOrange' value='orange'>Orange</option>
-		    <option id='colYellow' value='yellow'>Yellow</option>
-		</select>
-	    </p>
-	    <p style="float:right;">
-		Stroke picker:
-		<select id='selectStroke'>
-		    <option id='stroke1' value='6' selected='selected'>1</option>
-		    <option id='stroke2' value='10'>2</option>
-		    <option id='stroke3' value='14'>3</option>
-		    <option id='stroke4' value='18'>4</option>
-		    <option id='stroke5' value='22'>5</option>
-		    <option id='stroke6' value='26'>6</option>
-		</select>
-	    </p>
+	    <ul id="line-picker">
+		<li class="line6 selected-stroke" id="6" data-line="6"><span></span></li>
+		<li class="line10" id="10" data-line="10"><span></span></li>
+		<li class="line14" id="14" data-line="14"><span></span></li>
+		<li class="line18" id="18" data-line="18"><span></span></li>
+		<li class="line22" id="22" data-line="22"><span></span></li>
+		<li class="line26" id="26" data-line="26"><span></span></li>
+	    </ul>
 	</div>
+	
 	<div id='controls'>
+	    <span></span>
 	    <input id='snapshotButton' type='button' value='Take snapshot'/>
 	    <input id ="clearCanvas" type="button" value="Clear canvas" />
 	</div>
-	
-	<span class="sparkline" data-ymin="0" data-ymax="10">1 1 1 2 2 3 4 5 5 4 3 5 6 7 7 4 2 1</span>
 	
 	<script type="text/javascript" src="js/drawsomething.js"></script>
     </body>
