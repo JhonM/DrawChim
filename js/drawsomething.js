@@ -5,17 +5,47 @@ function drawSometing() {
 
     var chooseColor = menuColor.options[menuColor.selectedIndex];
     var chooseStroke = menuStroke.options[menuStroke.selectedIndex];
+    
+    var ulMenu = document.getElementsByClassName('selected-stain');
+
+    for (var i = 0; i < ulMenu.length; i++) {
+	var dataLi = ulMenu[i].dataset;
+	var selectedColor = dataLi.stain;
+    }
+    console.log(selectedColor);
+    
+    var e = document.getElementById('red');
+    var dataLo = e.dataset.stain;
+    console.log(dataLo);
+    
+    
 
     if (drawCanvas) {
 	var isDown = false;
 	var ctx = drawCanvas.getContext("2d");
 	var canvasX,
-		canvasY,
-		blankCanvas = true;
+	canvasY,
+	blankCanvas = true;
+
 	ctx.fillStyle = '#fff';
 	ctx.fillRect(0, 0, 900, 500);
 	ctx.lineWidth = 6;
 	ctx.lineWidth = chooseStroke;
+	ctx.strokeStyle = selectedColor;
+	
+	// Get colors
+	var ids = [];
+	var ul = document.getElementById('color-picker');
+	var lis = ul.getElementsByTagName('li');
+	var li;
+	for (var i = 0, iLen = lis.length; i < iLen; i++) {
+	    li = lis[i];
+	    if (li.id) {
+		li.onclick = function(e) {
+		    ctx.strokeStyle = this.id;
+		};
+	    }
+	}
 
 	drawCanvas.addEventListener('touchstart', function(e) {
 	    var touchobj = e.changedTouches[0];
@@ -30,13 +60,7 @@ function drawSometing() {
 	    ctx.moveTo(canvasX, canvasY);
 	    e.preventDefault();
 	}, false);
-//	drawCanvas.onmousedown = function(e) {
-//	    isDown = true;
-//	    ctx.beginPath();
-//	    canvasX = e.pageX - drawCanvas.offsetLeft;
-//	    canvasY = e.pageY - drawCanvas.offsetTop;
-//	    ctx.moveTo(canvasX, canvasY);
-//	};
+
 
 	drawCanvas.addEventListener('touchmove', function(e) {
 	    var touchobj = e.changedTouches[0];
@@ -44,20 +68,11 @@ function drawSometing() {
 		canvasX = touchobj.pageX - drawCanvas.offsetLeft;
 		canvasY = touchobj.pageY - drawCanvas.offsetTop;
 		ctx.lineTo(canvasX, canvasY);
-		ctx.strokeStyle = chooseColor;
 		ctx.stroke();
 		e.preventDefault();
 	    }
 	}, false);
-//	drawCanvas.onmousemove = function(e) {
-//	    if (isDown !== false) {
-//		canvasX = e.pageX - drawCanvas.offsetLeft;
-//		canvasY = e.pageY - drawCanvas.offsetTop;
-//		ctx.lineTo(canvasX, canvasY);
-//		ctx.strokeStyle = chooseColor;
-//		ctx.stroke();
-//	    }
-//	};
+
 
 	drawCanvas.addEventListener('touchend', function(e) {
 	    isDown = false;
@@ -65,10 +80,7 @@ function drawSometing() {
 	    storeHistory();
 	    e.preventDefault();
 	}, false);
-//	drawCanvas.onmouseup = function() {
-//	    isDown = false;
-//	    ctx.closePath();
-//	};
+
 
 	if (window.localStorage) {
 	    img = new Image();
@@ -81,6 +93,8 @@ function drawSometing() {
 	    }
 	}
     }
+    
+    
 
     var storeHistory = function() {
 	img = drawCanvas.toDataURL("image/png");
@@ -151,14 +165,12 @@ function drawSometing() {
 	    }
 	};
 
-	// Initialization................................................
-
-	//context.font = FONT_HEIGHT + 'px Arial';
-	//loop = setInterval(drawSometing, 1000);
-	//return drawSomething();
-
     }
     return snap();
 }
-
+//function getDataColor(id) {
+//    var e = document.getElementById(id);
+//    var dataLo = e.dataset.stain;
+//    console.log(dataLo);
+//}
 window.onload = drawSometing();
