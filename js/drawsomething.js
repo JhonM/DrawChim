@@ -21,7 +21,8 @@ function drawSometing() {
 	ctx.fillStyle = '#fff';
 	ctx.fillRect(0, 0, 900, 500);
 	ctx.lineWidth = 6;
-	ctx.strokeStyle = 'yellow';
+	ctx.lineCap = 'round';
+	ctx.strokeStyle = 'rgba(0,0,255,0.5)';
 	
 	// Get colors
 	var ids = [];
@@ -32,7 +33,9 @@ function drawSometing() {
 	    li = lis[i];
 	    if (li.id) {
 		li.onclick = function(e) {
-		    ctx.strokeStyle = this.id;
+		    var e = document.getElementById(this.id);
+			var colorPicker = e.dataset.stain;
+			ctx.strokeStyle = 'rgba(' + colorPicker + ')';
 		};
 	    }
 	}
@@ -47,7 +50,9 @@ function drawSometing() {
 	    li = lis[i];
 	    if (li.id) {
 		li.onclick = function(e) {
-		    ctx.lineWidth = this.id;
+		    var e = document.getElementById(this.id);
+		        var linePicker = e.dataset.line;
+			ctx.lineWidth = linePicker;
 		};
 	    }
 	}
@@ -113,6 +118,7 @@ function drawSometing() {
     clearCanvas.addEventListener('click', function(e) {
 	e.preventDefault();
 	ctx.clearRect(0, 0, 900, 500);
+	storeHistory();
     });
 
     //Take snapshot to save as image
