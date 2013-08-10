@@ -8,10 +8,7 @@
         <title>DrawChim</title>
 
 	<link type="text/css" rel="stylesheet" href="css/base-draw.css"/>
-	<script type="text/javascript">
-	    
-	
-	</script>
+	<script class="jsbin" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
     </head>
     <body>
 	<div id='board'>
@@ -42,7 +39,7 @@
 	    <input id='snapshotButton' type='button' value='Take snapshot'/>
 	    <input id ="clearCanvas" type="button" value="Clear canvas" />
 	</div>
-	
+	<script type="text/javascript" src="js/drag.js"></script>
 	<script type="text/javascript" src="js/drawsomething.js"></script>
     </body>
 </html>
