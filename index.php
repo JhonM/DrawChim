@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html manifest="drawchim.manifest">
+<html >
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,7 +10,6 @@
         <title>DrawChim</title>
 
 	<link type="text/css" rel="stylesheet" href="css/base-draw.css"/>
-	<script type="text/javascript" src="js/lib/jquery.min.js"></script>
 	<!-- Home screen icons -->
 	<link rel="apple-touch-icon" href="img/apple-touch-icon.png" />
 	<link rel="apple-touch-icon" sizes="72x72" href="img/apple-touch-icon-72-72.png" />
