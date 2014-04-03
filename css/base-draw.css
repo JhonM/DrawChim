@@ -140,6 +140,7 @@ box-shadow: inset 2px 2px 3px rgba(65,65,65,0.8);
     box-shadow: 2px 2px 3px rgba(65,65,65,0.5);
     padding: 10px;
     border-radius: 10px;
+    -webkit-transform: all 2s ease-in-out;
 }
 
 #controls #snapshotButton, #controls #clearCanvas {

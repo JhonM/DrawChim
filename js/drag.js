@@ -13,6 +13,7 @@ var Draggable = function(element) {
 
 Draggable.prototype._init = function(first_argument) {
 	this.element.style.position = 'absolute';
+	this.ease();
 };
 
 Draggable.prototype.setEvents = function() {
@@ -22,6 +23,9 @@ Draggable.prototype.setEvents = function() {
 	});
 	this.element.addEventListener('touchmove', function(e) {
 		self.move(e);
+	});
+	this.element.addEventListener('touchend', function() {
+		self.ease();
 	});
 };
 
@@ -37,9 +41,13 @@ Draggable.prototype.start = function(e) {
 
 Draggable.prototype.move = function(e) {
 	e.preventDefault();
-	orig = e.touches;
+	var orig = e.touches;
 	this.element.style.top = (orig[0].pageY - this.holder.y + 'px');
 	this.element.style.left = (orig[0].pageX - this.holder.x + 'px');
+};
+
+Draggable.prototype.ease = function() {
+	this.element.style.transition = '.4s';
 };
 
 new Draggable(document.querySelector('#controls'));
