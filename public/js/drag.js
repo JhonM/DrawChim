@@ -24,9 +24,6 @@ Draggable.prototype.setEvents = function() {
 	this.element.addEventListener('touchmove', function(e) {
 		self.move(e);
 	});
-	this.element.addEventListener('touchend', function() {
-		self.ease();
-	});
 };
 
 Draggable.prototype.start = function(e) {
@@ -47,7 +44,7 @@ Draggable.prototype.move = function(e) {
 };
 
 Draggable.prototype.ease = function() {
-	this.element.style.transition = '.4s';
+	this.element.style.transition = '.10s';
 };
 
 new Draggable(document.querySelector('#controls'));
