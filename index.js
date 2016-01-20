@@ -22,7 +22,7 @@ var drawChim = function(options) {
     this.canvas.height = window.innerHeight;
     this.isDown = false;
     this.blankCanvas = true;
-    this.ctx = canvas.getContext('2d');
+    this.ctx = this.canvas.getContext('2d');
     this.canvasX;
     this.canvasY;
 
@@ -128,15 +128,5 @@ drawChim.prototype.clearCanvas = function() {
     this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
     this.storeHistory();
 }
-
-
-
-
-
-
-
-
-
-
 
 module.exports = drawChim;

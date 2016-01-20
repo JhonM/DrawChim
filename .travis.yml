@@ -10,4 +10,4 @@ before_script:
   - mocha-phantomjs --version
 script:
   - npm run build-js
-  - npm run test
+  - npm run test-mocha

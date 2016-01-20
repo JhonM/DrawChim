@@ -19,7 +19,9 @@
     "build-js": "npm run build-debug && npm run build-min",
     "build-css": "sass sass/drawchim.scss public/css/drawchim.css",
     "build-files": "npm run build-js && npm run build-css",
-    "test": "make test"
+    "test-phantom": "make test",
+    "test-mocha": "mocha-phantomjs testRunner.html",
+    "test": "npm run test-phantom && npm run test-mocha"
   },
   "repository": {
     "type": "git",
