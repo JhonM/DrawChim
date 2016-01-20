@@ -1,14 +1,23 @@
 'use strict';
 /* jshint node: true */
 
-var Multiply = require('./src/multiply');
+var ExtendDefault = require('./src/extend_default');
 
-var drawChim = function(elm) {
+var drawChim = function(options) {
     if (!(this instanceof drawChim)) {
       return new drawChim();
     }
 
-    this.canvas = elm;
+    var defaults = {
+        selector: null,
+        clearBtn: null
+    }
+
+    if (arguments[0] && typeof arguments[0] === 'object') {
+        this.options = ExtendDefault(defaults, arguments[0]);
+    }
+
+    this.canvas = this.options.selector;
     this.canvas.width = window.innerWidth;
     this.canvas.height = window.innerHeight;
     this.isDown = false;
@@ -23,12 +32,12 @@ var drawChim = function(elm) {
 drawChim.prototype._init = function() {
     this.createCanvas();
     this.setEvents();
-    this.storeCanvasAsImage()
+    this.storeCanvasAsImage();
 }
 
 drawChim.prototype.createCanvas = function() {
     this.ctx.fillStyle = '#000';
-    this.ctx.fillRect(0, 0, window.innerWidth, window.innerHeight);
+    this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
     this.ctx.lineWidth = 6;
     this.ctx.lineCap = 'round';
     this.ctx.strokeStyle = 'rgba(0,0,255,0.5)';
@@ -38,6 +47,7 @@ drawChim.prototype.setEvents = function() {
     var _this = this;
 
     this.canvas.addEventListener('touchstart', function(e) {
+        e.preventDefault();
         _this.drawStart(e);
     }, false);
 
@@ -46,12 +56,15 @@ drawChim.prototype.setEvents = function() {
     }, false);
 
     this.canvas.addEventListener('touchend', function(e) {
-        _this.drawEnd(e);
+        _this.drawEnd();
+    }, false);
+
+    this.options.clearBtn.addEventListener('touchstart', function() {
+        _this.clearCanvas();
     }, false);
 }
 
 drawChim.prototype.drawStart = function(e) {
-    e.preventDefault();
     var touchObj = e.changedTouches[0];
 
     if (this.blankCanvas) {
@@ -68,7 +81,6 @@ drawChim.prototype.drawStart = function(e) {
 }
 
 drawChim.prototype.drawMove = function(e) {
-    e.preventDefault();
     var touchObj = e.changedTouches[0];
 
     if (this.isDown !== false) {
@@ -79,8 +91,7 @@ drawChim.prototype.drawMove = function(e) {
     }
 }
 
-drawChim.prototype.drawEnd = function(e) {
-    e.preventDefault();
+drawChim.prototype.drawEnd = function() {
     this.isDown = false;
     this.ctx.closePath();
     this.storeHistory();
@@ -110,5 +121,22 @@ drawChim.prototype.storeCanvasAsImage = function() {
         }
     }
 }
+
+drawChim.prototype.clearCanvas = function() {
+    this.ctx.fillStyle = '#000';
+    this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+    this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
+    this.storeHistory();
+}
+
+
+
+
+
+
+
+
+
+
 
 module.exports = drawChim;

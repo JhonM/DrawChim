@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Javascript Boilerplate Example</title>
+    <title>DrawChim drawboard</title>
     <script src="js/drawchim.js"></script>
 
     <style>
@@ -13,12 +13,14 @@
 </head>
 <body>
 
-<canvas id="canvas">
-    
-</canvas>
+<canvas id="canvas"></canvas>
+<button id="clear">Clear canvas</button>
 
 <script>
-    var myCanvas = new Drawchim(document.getElementById('canvas'));
+    var myCanvas = new Drawchim({
+        selector: document.getElementById('canvas'),
+        clearBtn: document.getElementById('clear')
+    });
 </script>
 </body>
 </html>
