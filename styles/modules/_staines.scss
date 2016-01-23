@@ -1,0 +1,20 @@
+ul {
+    padding: 0;
+}
+
+.staines {
+    width: 100%;
+    @include display(flex);
+    @include justify-content(center);
+    list-style-type: none;
+
+    li {
+        background: red;
+        max-width: 50px;
+        height: 50px;
+        margin: 10px 10px;
+        padding: 0 10px;
+        border-radius: 50%;
+        @include flex(1);
+    }
+}

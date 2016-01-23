@@ -18,8 +18,9 @@ var drawChim = function(options) {
     }
 
     this.canvas = this.options.selector;
-    this.canvas.width = window.innerWidth;
-    this.canvas.height = window.innerHeight;
+    this.canvas.width = 1000;
+    this.canvas.height = 788;
+    this.canvas.bgColor = '#ffffff';
     this.isDown = false;
     this.blankCanvas = true;
     this.ctx = this.canvas.getContext('2d');
@@ -36,11 +37,11 @@ drawChim.prototype._init = function() {
 }
 
 drawChim.prototype.createCanvas = function() {
-    this.ctx.fillStyle = '#000';
+    this.ctx.fillStyle = this.canvas.bgColor;
     this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
     this.ctx.lineWidth = 6;
     this.ctx.lineCap = 'round';
-    this.ctx.strokeStyle = 'rgba(0,0,255,0.5)';
+    this.ctx.strokeStyle = 'rgba(58, 56, 68, 0.5)';
 }
 
 drawChim.prototype.setEvents = function() {
@@ -123,7 +124,7 @@ drawChim.prototype.storeCanvasAsImage = function() {
 }
 
 drawChim.prototype.clearCanvas = function() {
-    this.ctx.fillStyle = '#000';
+    this.ctx.fillStyle = this.canvas.bgColor;
     this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
     this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
     this.storeHistory();
