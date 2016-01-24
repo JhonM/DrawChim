@@ -2,6 +2,7 @@
 /* jshint node: true */
 
 var ExtendDefault = require('./src/extend_default');
+var TemplateEngine = require('./src/template-engine');
 
 var drawChim = function(options) {
     if (!(this instanceof drawChim)) {
