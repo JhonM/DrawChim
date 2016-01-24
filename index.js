@@ -11,8 +11,9 @@ var drawChim = function(options) {
 
     var defaults = {
         selector: null,
-        clearBtn: null
-    }
+        clearBtn: null,
+        stains: ['red', 'green', 'pink', 'yellow', 'purple', 'black', 'blue']
+    };
 
     if (arguments[0] && typeof arguments[0] === 'object') {
         this.options = ExtendDefault(defaults, arguments[0]);
@@ -35,7 +36,7 @@ drawChim.prototype._init = function() {
     this.createCanvas();
     this.setEvents();
     this.storeCanvasAsImage();
-}
+};
 
 drawChim.prototype.createCanvas = function() {
     this.ctx.fillStyle = this.canvas.bgColor;
@@ -43,7 +44,25 @@ drawChim.prototype.createCanvas = function() {
     this.ctx.lineWidth = 6;
     this.ctx.lineCap = 'round';
     this.ctx.strokeStyle = 'rgba(58, 56, 68, 0.5)';
-}
+
+    this.createStain();
+};
+
+drawChim.prototype.createStain = function() {
+    var template = 
+        '<ul class="stains">' +
+            '<%for(var index in this.colors) {%>' +
+                '<li data-color="<%this.colors[index]%>" style="background:<%this.colors[index]%>"></li>' +
+            '<%}%>' +
+            '<li class="add-stain">+</li>' +
+        '</ul>',
+        stainHolder = document.getElementById('stain-pallet'),
+        stains = TemplateEngine(template, {
+            colors: this.options.stains
+        });
+
+    stainHolder.innerHTML = stains;
+};
 
 drawChim.prototype.setEvents = function() {
     var _this = this;
@@ -64,7 +83,13 @@ drawChim.prototype.setEvents = function() {
     this.options.clearBtn.addEventListener('touchstart', function() {
         _this.clearCanvas();
     }, false);
-}
+
+    var picker = document.getElementsByName('li');
+
+    picker.addEventListener('touchstart', function(e) {
+        debugger
+    });
+};
 
 drawChim.prototype.drawStart = function(e) {
     var touchObj = e.changedTouches[0];
@@ -80,7 +105,7 @@ drawChim.prototype.drawStart = function(e) {
     this.canvasY = touchObj.pageY - this.canvas.offsetTop;
 
     this.ctx.moveTo(this.canvasX, this.canvasY);
-}
+};
 
 drawChim.prototype.drawMove = function(e) {
     var touchObj = e.changedTouches[0];
@@ -91,13 +116,13 @@ drawChim.prototype.drawMove = function(e) {
         this.ctx.lineTo(this.canvasX, this.canvasY);
         this.ctx.stroke();
     }
-}
+};
 
 drawChim.prototype.drawEnd = function() {
     this.isDown = false;
     this.ctx.closePath();
     this.storeHistory();
-}
+};
 
 drawChim.prototype.storeHistory = function() {
     var img = this.canvas.toDataURL('image/png');
@@ -115,20 +140,20 @@ drawChim.prototype.storeCanvasAsImage = function() {
 
         img.onload = function() {
             _this.ctx.drawImage(img, 0, 0);
-        }
+        };
 
         if (localStorage.curImg) {
             img.src = localStorage.curImg;
             this.blankCanvas = false;
         }
     }
-}
+};
 
 drawChim.prototype.clearCanvas = function() {
     this.ctx.fillStyle = this.canvas.bgColor;
     this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
     this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
     this.storeHistory();
-}
+};
 
 module.exports = drawChim;

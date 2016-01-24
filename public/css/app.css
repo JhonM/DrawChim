@@ -54,7 +54,7 @@ body {
 ul {
   padding: 0; }
 
-.staines {
+.stains {
   width: 100%;
   display: -webkit-box;
   display: -moz-box;
@@ -73,8 +73,7 @@ ul {
   justify-content: center;
   -ms-flex-pack: center;
   list-style-type: none; }
-  .staines li {
-    background: red;
+  .stains li {
     max-width: 50px;
     height: 50px;
     margin: 10px 10px;
@@ -87,5 +86,11 @@ ul {
     -moz-flex: 1;
     -ms-flex: 1;
     flex: 1; }
+    .stains li.add-stain {
+      border: 3px solid lightblue;
+      position: relative;
+      color: lightblue;
+      font-size: 30px;
+      padding: 2px 14px; }
 
 /*# sourceMappingURL=app.css.map */
