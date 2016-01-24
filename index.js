@@ -84,11 +84,7 @@ drawChim.prototype.setEvents = function() {
         _this.clearCanvas();
     }, false);
 
-    var picker = document.getElementsByName('li');
-
-    picker.addEventListener('touchstart', function(e) {
-        debugger
-    });
+    var picker = document.getElementsByTagName('li');
 };
 
 drawChim.prototype.drawStart = function(e) {
