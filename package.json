@@ -1,0 +1,41 @@
+{
+  "name": "drawchim",
+  "version": "0.0.1",
+  "description": "DrawChim is a simple html5 based draw application. I made it for my son.",
+  "main": "index.js",
+  "dependencies": {},
+  "devDependencies": {
+    "browserify": "^12.0.1",
+    "chai": "^3.3.0",
+    "domquery": "^1.2.0",
+    "mocha": "^2.3.3",
+    "uglify-js": "^2.6.1",
+    "watchify": "^3.6.1"
+  },
+  "scripts": {
+    "watch": "watchify index.js -d --s Drawchim -o public/js/drawchim.js -v",
+    "watch-scss": "sass --watch styles:public/css",
+    "build-debug": "browserify index.js -d --s Drawchim > public/js/drawchim.js",
+    "build-min": "browserify index.js --s Drawchim | uglifyjs -c > public/js/drawchim.min.js",
+    "build-js": "npm run build-debug && npm run build-min",
+    "build-css": "sass styles/drawchim.scss public/css/drawchim.css",
+    "build-files": "npm run build-js && npm run build-css",
+    "test-phantom": "make test",
+    "test-mocha": "mocha-phantomjs testRunner.html",
+    "test": "npm run test-phantom && npm run test-mocha"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/JhonM/DrawChim.git"
+  },
+  "keywords": [
+    "Javascript",
+    "drawchim"
+  ],
+  "author": "Jhon Majoor <jhonmajoor@gmail.com> (http://blancframe.com)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/JhonM/DrawChim/issues"
+  },
+  "homepage": "https://github.com/JhonM/DrawChim#readme"
+}

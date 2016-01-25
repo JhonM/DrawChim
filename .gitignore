@@ -1,30 +1,6 @@
-/nbproject/private/
-# Compiled source #
-###################
-
-
-# Codeigniter #
-############
-application/.htaccess
-application/config/config.php
-application/config/database.php
-public_html/index.php
-public_hml/.DS_Store
-README.md
-css/.DS_Store
-js/.DS_Store
-
-# Logs and databases #
-######################
-
-# OS generated files #
-######################
-.DS_Store
-.DS_Store?
-._*
-.Spotlight-V100
-.Trashes
-Icon?
-ehthumbs.db
-Thumbs.db
-nbproject
+node_modules/
+.sass-cache/
+styles/lib/*
+*.map
+*.DS_Store
+npm-debug.log
