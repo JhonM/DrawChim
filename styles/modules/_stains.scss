@@ -23,5 +23,9 @@ ul {
             font-size: 30px;
             padding: 2px 14px;
         }
+
+        &.is-active {
+            border: solid 3px rgba(white, .8);
+        }
     }
 }

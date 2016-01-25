@@ -92,5 +92,7 @@ ul {
       color: lightblue;
       font-size: 30px;
       padding: 2px 14px; }
+    .stains li.is-active {
+      border: solid 3px rgba(255, 255, 255, 0.8); }
 
 /*# sourceMappingURL=app.css.map */

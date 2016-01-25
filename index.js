@@ -3,6 +3,7 @@
 
 var ExtendDefault = require('./src/extend_default');
 var TemplateEngine = require('./src/template-engine');
+var $$ = require('domquery');
 
 var drawChim = function(options) {
     if (!(this instanceof drawChim)) {
@@ -12,7 +13,7 @@ var drawChim = function(options) {
     var defaults = {
         selector: null,
         clearBtn: null,
-        stains: ['red', 'green', 'pink', 'yellow', 'purple', 'black', 'blue']
+        stains: ['255, 0, 0', '0, 255, 0', '0, 0, 255', '0, 0, 0']
     };
 
     if (arguments[0] && typeof arguments[0] === 'object') {
@@ -52,7 +53,7 @@ drawChim.prototype.createStain = function() {
     var template = 
         '<ul class="stains">' +
             '<%for(var index in this.colors) {%>' +
-                '<li data-color="<%this.colors[index]%>" style="background:<%this.colors[index]%>"></li>' +
+                '<li data-color="<%this.colors[index]%>" style="background:rgb(<%this.colors[index]%>)"></li>' +
             '<%}%>' +
             '<li class="add-stain">+</li>' +
         '</ul>',
@@ -84,7 +85,19 @@ drawChim.prototype.setEvents = function() {
         _this.clearCanvas();
     }, false);
 
-    var picker = document.getElementsByTagName('li');
+    $$('.stains li').on('touchstart', function(e) {
+        _this.swapColor(e);
+    });
+};
+
+drawChim.prototype.swapColor = function(event) {
+    var elm = event.srcElement,
+        newColor = elm.dataset.color;
+
+    $$('.stains li').removeClass('is-active');
+    $$(elm).addClass('is-active');
+    this.ctx.strokeStyle = 'rgba(' + newColor + ', ' +  0.5 + ')';
+    // debugger;
 };
 
 drawChim.prototype.drawStart = function(e) {
