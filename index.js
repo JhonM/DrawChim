@@ -1,9 +1,11 @@
 'use strict';
 /* jshint node: true */
 
+var $$ = require('domquery');
 var ExtendDefault = require('./src/extend_default');
 var TemplateEngine = require('./src/template-engine');
-var $$ = require('domquery');
+var Touchy = require('touchy');
+Touchy.enableOn(document);
 
 var drawChim = function(options) {
     if (!(this instanceof drawChim)) {
@@ -87,6 +89,10 @@ drawChim.prototype.setEvents = function() {
 
     $$('.stains li').on('touchstart', function(e) {
         _this.swapColor(e);
+    });
+
+    this.canvas.addEventListener('tap:hold', function (e) {
+      console.log('tap:hold!', e);
     });
 };
 
