@@ -1,11 +1,14 @@
 describe("Canvas appearance tests", function () {
     var canvas = document.createElement('canvas'),
-        clearBtn = document.createElement('canvas');
+        clearBtn = document.createElement('button'),
+        stainPallet = document.createElement('div');
 
-    canvas.id  = "canvasTest";
-    clearBtn.id  = "clear";
+    canvas.id  = 'canvasTest';
+    clearBtn.id  = 'clear';
+    stainPallet.id = 'stain-pallet';
 
     document.body.appendChild(canvas);
+    document.body.appendChild(stainPallet);
     document.body.appendChild(clearBtn);
 
     var myCanvas = new Drawchim({
@@ -13,11 +16,11 @@ describe("Canvas appearance tests", function () {
         clearBtn: document.getElementById('clear')
     });
 
-    it("has canvas selector", function() {
+    it('has canvas selector', function() {
         expect(myCanvas.options.selector.id).to.equal('canvasTest');
     });
 
-    it("has canvas clear button", function() {
+    it('has clear button', function() {
         expect(myCanvas.options.clearBtn.id).to.equal('clear');
     });
 });
