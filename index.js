@@ -92,7 +92,7 @@ drawChim.prototype.setEvents = function() {
     });
 
     this.canvas.addEventListener('tap:hold', function (e) {
-      console.log('tap:hold!', e);
+        _this.colorPickerCircle(e);
     });
 };
 
@@ -105,6 +105,25 @@ drawChim.prototype.swapColor = function(event) {
     this.ctx.strokeStyle = 'rgba(' + newColor + ', ' +  0.5 + ')';
     // debugger;
 };
+
+drawChim.prototype.colorPickerCircle = function(e) {
+    var touchObj = e.detail;
+    var stainCircle = document.getElementById('stain-circle');
+
+    this.canvasX = touchObj.pageX - 100;
+    this.canvasY = touchObj.pageY - 100;
+
+    stainCircle.style.top = this.canvasY + 'px';
+    stainCircle.style.left = this.canvasX + 'px';
+
+    setTimeout(function() {
+        $$(stainCircle).addClass('is-active');
+    }, 300)
+
+    // setTimeout(function() {
+    //     $$(stainCircle).removeClass('is-active')
+    // }, 1000)
+}
 
 drawChim.prototype.drawStart = function(e) {
     var touchObj = e.changedTouches[0];

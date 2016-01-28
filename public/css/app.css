@@ -95,4 +95,32 @@ ul {
     .stains li.is-active {
       border: solid 3px rgba(255, 255, 255, 0.8); }
 
+#stain-circle {
+  position: absolute;
+  display: block;
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  background: transparent;
+  opacity: 0;
+  filter: alpha(opacity=0);
+  -webkit-transform: scale(0.1);
+  -moz-transform: scale(0.1);
+  -ms-transform: scale(0.1);
+  -o-transform: scale(0.1);
+  transform: scale(0.1);
+  /* 1/10 of the original size */
+  -webkit-transition: all, 0.2s ease-in-out;
+  -moz-transition: all, 0.2s ease-in-out;
+  transition: all, 0.2s ease-in-out; }
+  #stain-circle.is-active {
+    background: red;
+    opacity: 1;
+    filter: alpha(opacity=100);
+    -webkit-transform: scale(1);
+    -moz-transform: scale(1);
+    -ms-transform: scale(1);
+    -o-transform: scale(1);
+    transform: scale(1); }
+
 /*# sourceMappingURL=app.css.map */
