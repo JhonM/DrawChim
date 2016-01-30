@@ -29,3 +29,21 @@ ul {
         }
     }
 }
+
+#stain-circle {
+    position: absolute;
+    display: block;
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    background: transparent;
+    @include opacity(0);
+    @include transform(scale(0.1)); /* 1/10 of the original size */
+    @include transition(all, .2s ease-in-out);
+
+    &.is-active {
+        background: red;
+        @include opacity(1);
+        @include transform(scale(1));
+    }
+}

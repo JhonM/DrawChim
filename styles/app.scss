@@ -3,6 +3,9 @@
 @import 'lib/neat/neat';
 @import 'variables';
 
+// mixins
+@import "mixins/custom";
+
 // Base
 @import 'base/base';
 

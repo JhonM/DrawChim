@@ -1,9 +1,11 @@
 'use strict';
 /* jshint node: true */
 
+var $$ = require('domquery');
 var ExtendDefault = require('./src/extend_default');
 var TemplateEngine = require('./src/template-engine');
-var $$ = require('domquery');
+var Touchy = require('touchy');
+Touchy.enableOn(document);
 
 var drawChim = function(options) {
     if (!(this instanceof drawChim)) {
@@ -88,6 +90,10 @@ drawChim.prototype.setEvents = function() {
     $$('.stains li').on('touchstart', function(e) {
         _this.swapColor(e);
     });
+
+    this.canvas.addEventListener('tap:hold', function (e) {
+        _this.colorPickerCircle(e);
+    });
 };
 
 drawChim.prototype.swapColor = function(event) {
@@ -99,6 +105,25 @@ drawChim.prototype.swapColor = function(event) {
     this.ctx.strokeStyle = 'rgba(' + newColor + ', ' +  0.5 + ')';
     // debugger;
 };
+
+drawChim.prototype.colorPickerCircle = function(e) {
+    var touchObj = e.detail;
+    var stainCircle = document.getElementById('stain-circle');
+
+    this.canvasX = touchObj.pageX - 100;
+    this.canvasY = touchObj.pageY - 100;
+
+    stainCircle.style.top = this.canvasY + 'px';
+    stainCircle.style.left = this.canvasX + 'px';
+
+    setTimeout(function() {
+        $$(stainCircle).addClass('is-active');
+    }, 300)
+
+    // setTimeout(function() {
+    //     $$(stainCircle).removeClass('is-active')
+    // }, 1000)
+}
 
 drawChim.prototype.drawStart = function(e) {
     var touchObj = e.changedTouches[0];
