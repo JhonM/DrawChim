@@ -52,7 +52,7 @@ drawChim.prototype.createCanvas = function() {
 };
 
 drawChim.prototype.createStain = function() {
-    var template = 
+    var template =
         '<ul class="stains">' +
             '<%for(var index in this.colors) {%>' +
                 '<li data-color="<%this.colors[index]%>" style="background:rgb(<%this.colors[index]%>)"></li>' +
@@ -91,9 +91,9 @@ drawChim.prototype.setEvents = function() {
         _this.swapColor(e);
     });
 
-    this.canvas.addEventListener('tap:hold', function (e) {
-        _this.colorPickerCircle(e);
-    });
+    // this.canvas.addEventListener('tap:hold', function (e) {
+    //     _this.colorPickerCircle(e);
+    // });
 };
 
 drawChim.prototype.swapColor = function(event) {
@@ -134,7 +134,7 @@ drawChim.prototype.drawStart = function(e) {
 
     this.isDown = true;
     this.ctx.beginPath();
-    
+
     this.canvasX = touchObj.pageX - this.canvas.offsetLeft;
     this.canvasY = touchObj.pageY - this.canvas.offsetTop;
 
