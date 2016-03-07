@@ -55,7 +55,7 @@ drawChim.prototype.createStain = function() {
     var template =
         '<ul class="stains">' +
             '<%for(var index in this.colors) {%>' +
-                '<li data-color="<%this.colors[index]%>" style="background:rgb(<%this.colors[index]%>)"></li>' +
+                '<li class="<%this.colors[index] === "0, 0, 0" ? "is-active" : null %>" data-color="<%this.colors[index]%>" style="background:rgb(<%this.colors[index]%>)"></li>' +
             '<%}%>' +
             '<li class="add-stain">+</li>' +
         '</ul>',
@@ -94,6 +94,13 @@ drawChim.prototype.setEvents = function() {
     // this.canvas.addEventListener('tap:hold', function (e) {
     //     _this.colorPickerCircle(e);
     // });
+    $$('#pallets').on('swipe:down', function(){
+        $$('#header').addClass('is-active');
+    });
+
+    $$('#header').on('swipe:up', function(){
+        $$('#header').removeClass('is-active');
+    });
 };
 
 drawChim.prototype.swapColor = function(event) {
