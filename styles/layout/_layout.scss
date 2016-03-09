@@ -45,8 +45,12 @@
 
 #clear {
     position: fixed;
-    left: 0;
-    right: 0;
+    display: block;
+    right: 2%;
+    bottom: 2%;
+    width: 50px;
+    height: 50px;
+    background: red;
 }
 
 #app-canvas {

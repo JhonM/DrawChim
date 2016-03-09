@@ -107,13 +107,21 @@ drawChim.prototype.setEvents = function() {
     // });
 
     $$('#pallets').on('swipe:down', function(){
-        $$('#header').addClass('is-active');
+        _this.closeOpenPallet(true);
     });
 
     $$('#header').on('swipe:up', function(){
-        $$('#header').removeClass('is-active');
+        _this.closeOpenPallet(false);
     });
 };
+
+drawChim.prototype.closeOpenPallet = function(state) {
+    if (state === true) {
+        $$('#header').addClass('is-active');
+    } else {
+        $$('#header').removeClass('is-active');
+    }
+}
 
 drawChim.prototype.swapColor = function(event) {
     var elm = event.srcElement,
@@ -122,6 +130,7 @@ drawChim.prototype.swapColor = function(event) {
     $$('.stains li').removeClass('is-active');
     $$(elm).addClass('is-active');
     this.ctx.strokeStyle = 'rgba(' + newColor + ', ' +  0.5 + ')';
+    this.closeOpenPallet(false);
 };
 
 drawChim.prototype.colorPickerCircle = function(e) {
