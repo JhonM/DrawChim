@@ -71,10 +71,14 @@ body {
   #header.is-active {
     top: 0; }
 
+#clear {
+  position: fixed;
+  left: 0;
+  right: 0; }
+
 #app-canvas .l-wrapper {
   text-align: center; }
 #app-canvas #canvas {
-  margin-top: 40px;
   box-shadow: 0 0px 20px 2px rgba(0, 0, 0, 0.5); }
 
 ul {

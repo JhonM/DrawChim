@@ -23,8 +23,8 @@ var drawChim = function(options) {
     }
 
     this.canvas = this.options.selector;
-    this.canvas.width = 1000;
-    this.canvas.height = 788;
+    this.canvas.width = window.innerWidth;
+    this.canvas.height = window.innerHeight;
     this.canvas.bgColor = '#ffffff';
     this.isDown = false;
     this.blankCanvas = true;
@@ -35,9 +35,18 @@ var drawChim = function(options) {
     this._init();
 };
 
+drawChim.prototype.resizeCanvas = function() {
+    this.canvas.setAttribute('width', window.innerWidth);
+    this.canvas.setAttribute('height', window.innerHeight);
+    this.createCanvas();
+    // this.storeHistory();
+};
+
 drawChim.prototype._init = function() {
     this.createCanvas();
+    this.createStain();
     this.setEvents();
+    this.resizeCanvas()
     this.storeCanvasAsImage();
 };
 
@@ -47,8 +56,6 @@ drawChim.prototype.createCanvas = function() {
     this.ctx.lineWidth = 6;
     this.ctx.lineCap = 'round';
     this.ctx.strokeStyle = 'rgba(58, 56, 68, 0.5)';
-
-    this.createStain();
 };
 
 drawChim.prototype.createStain = function() {
@@ -91,9 +98,14 @@ drawChim.prototype.setEvents = function() {
         _this.swapColor(e);
     });
 
+    $$(window).on('resize', function(){
+        _this.resizeCanvas();
+    });
+
     // this.canvas.addEventListener('tap:hold', function (e) {
     //     _this.colorPickerCircle(e);
     // });
+
     $$('#pallets').on('swipe:down', function(){
         $$('#header').addClass('is-active');
     });
@@ -110,7 +122,6 @@ drawChim.prototype.swapColor = function(event) {
     $$('.stains li').removeClass('is-active');
     $$(elm).addClass('is-active');
     this.ctx.strokeStyle = 'rgba(' + newColor + ', ' +  0.5 + ')';
-    // debugger;
 };
 
 drawChim.prototype.colorPickerCircle = function(e) {
