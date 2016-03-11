@@ -3,6 +3,9 @@
 <head>
     <title>DrawChim drawboard</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+
     <link rel="stylesheet" href="css/app.css">
     <script src="js/drawchim.js"></script>
 </head>
@@ -11,33 +14,19 @@
         <section id="header" class="l-section">
             <header class="menu-bar">
                 <div class="l-wrapper">
-                    test
+                    <span class="logo">
+                        <img src="img/svg/logo.svg" alt="" />
+                    </span>
                 </div>
             </header>
-        </section>
-        <section id="pallets" class="l-section">
-            <div id="stain-pallet" class="l-wrapper">
-<!--                 <ul class="stains">
-                    <li data-color='red'></li>
-                    <li data-color='green'></li>
-                    <li data-color='yellow'></li>
-                    <li data-color='purple'></li>
-                    <li data-color='black'></li>
-                    <li data-color='pink'></li>
-                    <li data-color='black'></li>
-                    <li data-action='clear'></li>
-                </ul> -->
+            <div id="pallets" class="l-section">
+                <div id="stain-pallet" class="l-wrapper"></div>
             </div>
         </section>
-        <span id="stain-circle">
-            testtt
-        </span>
-        <section id="app-canvas" class="l-section">
-            <div class="l-wrapper">
-                <canvas id="canvas"></canvas>
-            </div>
+        <section id="app-canvas">
+            <canvas id="canvas"></canvas>
         </section>
-        <button id="clear">Clear canvas</button>
+        <span id="clear">Clear canvas</span>
     </div>
 
     <script>

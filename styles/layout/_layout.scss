@@ -1,14 +1,56 @@
 #header {
+    position: absolute;
+    top: -160px;
     width: 100%;
-    height: 40px;
+    height: 160px;
     background: $color-sec;
+    @include transition(top .3s ease-in-out);
 
+    .logo {
+        display: block;
+        width: 155px;
+        padding: 15px 0;
+
+        img {
+            width: 100%;
+            height: 100%;
+        }
+    }
+
+    #pallets {
+        position: relative;
+        width: 100%;
+        height: 70px;
+        background: $color-pri;
+
+        &:after {
+            position: absolute;
+            content: '';
+            right: 0;
+            bottom: -40px;
+            left: 0;
+            margin-left: auto;
+            margin-right: auto;
+            width: 50px;
+            height: 40px;
+            background: $color-pri;
+            border-radius: 0 0 20px 20px;
+        }
+    }
+
+    &.is-active {
+        top: 0;
+    }
 }
 
-#pallets {
-    width: 100%;
-    height: 70px;
-    background: $color-pri;
+#clear {
+    position: fixed;
+    display: block;
+    right: 2%;
+    bottom: 2%;
+    width: 50px;
+    height: 50px;
+    background: red;
 }
 
 #app-canvas {
@@ -16,9 +58,9 @@
     .l-wrapper {
         text-align: center;
     }
-    
+
     #canvas {
-        margin-top: 40px;
+        // margin-top: 40px;
         box-shadow: 0 0px 20px 2px rgba(0, 0, 0, .5);
     }
 }
