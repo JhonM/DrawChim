@@ -9,6 +9,7 @@
     "chai": "^3.3.0",
     "domquery": "^1.2.0",
     "mocha": "^2.3.3",
+    "modalblanc": "^1.0.8",
     "touchy": "^0.1.6",
     "uglify-js": "^2.6.1",
     "watchify": "^3.6.1"
