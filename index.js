@@ -28,6 +28,7 @@ var drawChim = function(options) {
     this.canvas.bgColor = '#ffffff';
     this.isDown = false;
     this.blankCanvas = true;
+    this.addColor = false;
     this.ctx = this.canvas.getContext('2d');
     this.canvasX;
     this.canvasY;
@@ -55,10 +56,34 @@ drawChim.prototype.createCanvas = function() {
     this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
     this.ctx.lineWidth = 6;
     this.ctx.lineCap = 'round';
+    this.ctx.lineJoin = 'round';
     this.ctx.strokeStyle = 'rgba(58, 56, 68, 0.5)';
+    // this.ctx.globalCompositeOperation = 'difference';
 };
 
+drawChim.prototype.addStain = function() {
+    var colour = "255,105,180",
+        newStain = this.options.stains;
+
+    // push new stains + set addColor
+    newStain.push(colour);
+    this.addColor = true;
+
+    // create stains
+    this.createStain();
+
+    // set event
+    this.setEvents();
+}
+
 drawChim.prototype.createStain = function() {
+    var stainHolder = document.getElementById('stain-pallet');
+
+    // If add color, firt clear stainHolder
+    if (this.addColor) {
+        stainHolder.innerHTML = "";
+    }
+
     var template =
         '<ul class="stains">' +
             '<%for(var index in this.colors) {%>' +
@@ -66,7 +91,6 @@ drawChim.prototype.createStain = function() {
             '<%}%>' +
             '<li class="add-stain">+</li>' +
         '</ul>',
-        stainHolder = document.getElementById('stain-pallet'),
         stains = TemplateEngine(template, {
             colors: this.options.stains
         });
@@ -112,6 +136,10 @@ drawChim.prototype.setEvents = function() {
 
     $$('#header').on('swipe:up', function(){
         _this.closeOpenPallet(false);
+    });
+
+    $$('.add-stain').on('tap', function(){
+        _this.addStain();
     });
 };
 
