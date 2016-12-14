@@ -5,6 +5,7 @@ var $$ = require('domquery');
 var ExtendDefault = require('./src/extend_default');
 var TemplateEngine = require('./src/template-engine');
 var Touchy = require('touchy');
+var Modalblanc = require('modalblanc');
 Touchy.enableOn(document);
 
 var drawChim = function(options) {
@@ -39,8 +40,8 @@ var drawChim = function(options) {
 drawChim.prototype.resizeCanvas = function() {
     this.canvas.setAttribute('width', window.innerWidth);
     this.canvas.setAttribute('height', window.innerHeight);
+    this.storeCanvasAsImage();
     this.createCanvas();
-    // this.storeHistory();
 };
 
 drawChim.prototype._init = function() {
@@ -62,18 +63,31 @@ drawChim.prototype.createCanvas = function() {
 };
 
 drawChim.prototype.addStain = function() {
-    var colour = "255,105,180",
-        newStain = this.options.stains;
+    var template =
+        "<div>" +
+            "<h1>Kies een kleur</h1>" +
+            "<input type='color' value='#ff4499'/>" +
+        "</div>",
+        stains = TemplateEngine(template, {
+            colors: ''
+        });
 
-    // push new stains + set addColor
-    newStain.push(colour);
-    this.addColor = true;
-
-    // create stains
-    this.createStain();
-
-    // set event
-    this.setEvents();
+    var modal = new Modalblanc({
+        content: stains,
+        animation: 'slide-in-right'
+    });
+    modal.open();
+    // var colour = "255,105,180",
+    //     newStain = this.options.stains;
+    //
+    // // push new stains + set addColor
+    // newStain.push(colour);
+    // this.addColor = true;
+    //
+    // // create stains
+    // this.createStain();
+    // // set event
+    // this.setEvents();
 }
 
 drawChim.prototype.createStain = function() {
@@ -158,7 +172,7 @@ drawChim.prototype.swapColor = function(event) {
     $$('.stains li').removeClass('is-active');
     $$(elm).addClass('is-active');
     this.ctx.strokeStyle = 'rgba(' + newColor + ', ' +  0.5 + ')';
-    this.closeOpenPallet(false);
+    // this.closeOpenPallet(false);
 };
 
 drawChim.prototype.colorPickerCircle = function(e) {
