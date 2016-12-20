@@ -39,10 +39,12 @@ body {
   position: fixed;
   display: block;
   right: 2%;
-  bottom: 2%;
-  width: 50px;
-  height: 50px;
-  background: red; }
+  top: 10px;
+  width: 44px;
+  height: 44px;
+  background-image: url("../img/svg/icon-delete.svg");
+  background-repeat: no-repeat;
+  background-position: center center; }
 
 #app-canvas .l-wrapper {
   text-align: center; }

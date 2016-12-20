@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:sketch="http://www.bohemiancoding.com/sketch/ns">
+    <!-- Generator: Sketch 3.4.2 (15855) - http://www.bohemiancoding.com/sketch -->
+    <title>delete canvas</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" sketch:type="MSPage">
+        <g id="Clean-slate" sketch:type="MSArtboardGroup" transform="translate(-975.000000, -21.000000)" fill-opacity="0.2" fill="#000000" opacity="0.5">
+            <g id="delete-canvas" sketch:type="MSLayerGroup" transform="translate(965.000000, 11.000000)">
+                <path d="M20.2857143,23.7142857 L7,23.7142857 L7,20.2857143 L20.2857143,20.2857143 L20.2857143,7 L23.7142857,7 L23.7142857,20.2857143 L37,20.2857143 L37,23.7142857 L23.7142857,23.7142857 L23.7142857,37 L20.2857143,37 L20.2857143,23.7142857 Z" id="Rectangle-221" sketch:type="MSShapeGroup" transform="translate(22.000000, 22.000000) rotate(-45.000000) translate(-22.000000, -22.000000) "></path>
+            </g>
+        </g>
+    </g>
+</svg>

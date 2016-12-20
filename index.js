@@ -4,6 +4,7 @@
 var $$ = require('domquery');
 var ExtendDefault = require('./src/extend_default');
 var TemplateEngine = require('./src/template-engine');
+var CanvasBoard = require('./src/canvas-board');
 var Touchy = require('touchy');
 var Modalblanc = require('modalblanc');
 Touchy.enableOn(document);
@@ -45,6 +46,8 @@ drawChim.prototype.resizeCanvas = function() {
 };
 
 drawChim.prototype._init = function() {
+    CanvasBoard.createBoard('hello')
+
     this.buildScene();
     this.createCanvas();
     this.createStain();
@@ -67,7 +70,7 @@ drawChim.prototype.buildScene = function() {
     buildElement({
         elm: 'span',
         buttonId: 'clear',
-        buttonText: 'Clear canvas',
+        buttonText: null,
         parentId: this.appId
     });
 
