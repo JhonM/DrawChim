@@ -15,7 +15,6 @@ var drawChim = function(options) {
 
     var defaults = {
         selector: null,
-        clearBtn: null,
         stains: ['255, 0, 0', '0, 255, 0', '0, 0, 255', '0, 0, 0']
     };
 
@@ -33,6 +32,7 @@ var drawChim = function(options) {
     this.ctx = this.canvas.getContext('2d');
     this.canvasX;
     this.canvasY;
+    this.appId = 'app-canvas';
 
     this._init();
 };
@@ -45,6 +45,7 @@ drawChim.prototype.resizeCanvas = function() {
 };
 
 drawChim.prototype._init = function() {
+    this.buildScene();
     this.createCanvas();
     this.createStain();
     this.setEvents();
@@ -61,6 +62,22 @@ drawChim.prototype.createCanvas = function() {
     this.ctx.strokeStyle = 'rgba(58, 56, 68, 0.5)';
     // this.ctx.globalCompositeOperation = 'difference';
 };
+
+drawChim.prototype.buildScene = function() {
+    buildElement({
+        elm: 'span',
+        buttonId: 'clear',
+        buttonText: 'Clear canvas',
+        parentId: this.appId
+    });
+
+    buildElement({
+        elm: 'div',
+        buttonId: 'stain-pallet',
+        buttonText: null,
+        parentId: this.appId
+    });
+}
 
 drawChim.prototype.addStain = function() {
     var template =
@@ -128,9 +145,13 @@ drawChim.prototype.setEvents = function() {
         _this.drawEnd();
     }, false);
 
-    this.options.clearBtn.addEventListener('touchstart', function() {
+    $$('#clear').on('touchstart', function(){
         _this.clearCanvas();
-    }, false);
+    });
+
+    // this.options.clearBtn.addEventListener('touchstart', function() {
+    //     _this.clearCanvas();
+    // }, false);
 
     $$('.stains li').on('touchstart', function(e) {
         _this.swapColor(e);
@@ -258,5 +279,17 @@ drawChim.prototype.clearCanvas = function() {
     this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
     this.storeHistory();
 };
+
+function buildElement(buildOptions) {
+    var createElm,
+        parentElm;
+
+    createElm = document.createElement(buildOptions.elm);
+    createElm.id = buildOptions.buttonId;
+    createElm.innerHTML = buildOptions.buttonText;
+    parentElm = document.getElementById(buildOptions.parentId);
+
+    parentElm.appendChild(createElm);
+}
 
 module.exports = drawChim;
