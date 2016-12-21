@@ -11,6 +11,7 @@
     "mocha": "^3.1.2",
     "mocha-phantomjs-core": "^2.1.1",
     "modalblanc": "^1.1.1",
+    "phantomjs": "^2.1.7",
     "touchy": "^0.1.6",
     "uglify-js": "^2.6.1",
     "watchify": "^3.6.1"
@@ -25,7 +26,7 @@
     "build-css": "sass styles/drawchim.scss public/css/drawchim.css",
     "build-files": "npm run build-js && npm run build-css",
     "test-phantom": "make test",
-    "test-mocha": "phantomjs ./node_modules/mocha-phantomjs-core/mocha-phantomjs-core.js testRunner.html",
+    "test-mocha": "./bin/mocha-phantomjs testRunner.html",
     "test": "npm run test-phantom && npm run test-mocha"
   },
   "repository": {
