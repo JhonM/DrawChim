@@ -9,6 +9,7 @@
     "chai": "^3.3.0",
     "domquery": "^3.0.0",
     "mocha": "^3.1.2",
+    "mocha-phantomjs-core": "^2.1.1",
     "modalblanc": "^1.1.1",
     "touchy": "^0.1.6",
     "uglify-js": "^2.6.1",
@@ -24,7 +25,7 @@
     "build-css": "sass styles/drawchim.scss public/css/drawchim.css",
     "build-files": "npm run build-js && npm run build-css",
     "test-phantom": "make test",
-    "test-mocha": "mocha-phantomjs testRunner.html",
+    "test-mocha": "phantomjs ./node_modules/mocha-phantomjs-core/mocha-phantomjs-core.js testRunner.html",
     "test": "npm run test-phantom && npm run test-mocha"
   },
   "repository": {
