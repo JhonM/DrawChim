@@ -5,16 +5,20 @@
   "main": "index.js",
   "dependencies": {},
   "devDependencies": {
-    "browserify": "^12.0.1",
+    "browserify": "^13.1.0",
     "chai": "^3.3.0",
-    "domquery": "^1.2.0",
-    "mocha": "^2.3.3",
+    "domquery": "^3.0.0",
+    "mocha": "^3.1.2",
+    "mocha-phantomjs-core": "^2.1.1",
+    "modalblanc": "^1.1.1",
+    "phantomjs": "^2.1.7",
     "touchy": "^0.1.6",
     "uglify-js": "^2.6.1",
     "watchify": "^3.6.1"
   },
   "scripts": {
-    "watch": "watchify index.js -d --s Drawchim -o public/js/drawchim.js -v",
+    "watch": "npm run watch-scss & npm run watch-js",
+    "watch-js": "watchify index.js -d --s Drawchim -o public/js/drawchim.js -v",
     "watch-scss": "sass --watch styles:public/css",
     "build-debug": "browserify index.js -d --s Drawchim > public/js/drawchim.js",
     "build-min": "browserify index.js --s Drawchim | uglifyjs -c > public/js/drawchim.min.js",
@@ -22,9 +26,10 @@
     "build-css": "sass styles/drawchim.scss public/css/drawchim.css",
     "build-files": "npm run build-js && npm run build-css",
     "test-phantom": "make test",
-    "test-mocha": "mocha-phantomjs testRunner.html",
+    "test-mocha": "./bin/mocha-phantomjs testRunner.html",
     "test": "npm run test-phantom && npm run test-mocha"
   },
+  "bin": "bin/phantomjs",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/JhonM/DrawChim.git"

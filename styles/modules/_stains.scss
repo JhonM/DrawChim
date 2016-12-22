@@ -2,6 +2,11 @@ ul {
     padding: 0;
 }
 
+#stain-pallet {
+    position: absolute;
+    top: 0;
+}
+
 .stains {
     width: 100%;
     @include display(flex);
