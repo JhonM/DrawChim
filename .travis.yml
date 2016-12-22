@@ -11,4 +11,4 @@ before_script:
 script:
   - npm bin
   - npm run build-js
-  - npm run test-mocha
+  - npm run test
