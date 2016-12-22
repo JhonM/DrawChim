@@ -48,7 +48,7 @@ drawChim.prototype.resizeCanvas = function() {
 drawChim.prototype._init = function() {
     // CanvasBoard.createBoard('hello')
 
-    this.buildScene();
+    // this.buildScene();
     this.createCanvas();
     this.createStain();
     this.setEvents();
@@ -66,21 +66,21 @@ drawChim.prototype.createCanvas = function() {
     // this.ctx.globalCompositeOperation = 'difference';
 };
 
-drawChim.prototype.buildScene = function() {
-    buildElement({
-        elm: 'span',
-        buttonId: 'clear',
-        buttonText: null,
-        parentId: this.appId
-    });
-
-    buildElement({
-        elm: 'div',
-        buttonId: 'stain-pallet',
-        buttonText: null,
-        parentId: this.appId
-    });
-}
+// drawChim.prototype.buildScene = function() {
+//     buildElement({
+//         elm: 'span',
+//         buttonId: 'clear',
+//         buttonText: null,
+//         parentId: this.appId
+//     });
+//
+//     buildElement({
+//         elm: 'div',
+//         buttonId: 'stain-pallet',
+//         buttonText: null,
+//         parentId: this.appId
+//     });
+// }
 
 drawChim.prototype.addStain = function() {
     var template =
@@ -283,16 +283,16 @@ drawChim.prototype.clearCanvas = function() {
     this.storeHistory();
 };
 
-function buildElement(buildOptions) {
-    var createElm,
-        parentElm;
-
-    createElm = document.createElement(buildOptions.elm);
-    createElm.id = buildOptions.buttonId;
-    createElm.innerHTML = buildOptions.buttonText;
-    parentElm = document.getElementById(buildOptions.parentId);
-
-    parentElm.appendChild(createElm);
-}
+// function buildElement(buildOptions) {
+//     var createElm,
+//         parentElm;
+//
+//     createElm = document.createElement(buildOptions.elm);
+//     createElm.id = buildOptions.buttonId;
+//     createElm.innerHTML = buildOptions.buttonText;
+//     parentElm = document.getElementById(buildOptions.parentId);
+//
+//     parentElm.appendChild(createElm);
+// }
 
 module.exports = drawChim;
