@@ -9,5 +9,6 @@ before_script:
   - phantomjs --version
   - mocha-phantomjs --version
 script:
+  - npm bin
   - npm run build-js
   - npm run test-mocha

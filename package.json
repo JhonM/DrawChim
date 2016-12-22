@@ -29,6 +29,7 @@
     "test-mocha": "./bin/mocha-phantomjs testRunner.html",
     "test": "npm run test-phantom && npm run test-mocha"
   },
+  "bin": "bin/phantomjs",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/JhonM/DrawChim.git"
