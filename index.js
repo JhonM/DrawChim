@@ -4,7 +4,7 @@
 var $$ = require('domquery');
 var ExtendDefault = require('./src/extend_default');
 var TemplateEngine = require('./src/template-engine');
-// var CanvasBoard = require('./src/canvas-board');
+var CanvasBoard = require('./src/canvas-board');
 var Touchy = require('touchy');
 var Modalblanc = require('modalblanc');
 Touchy.enableOn(document);
@@ -15,7 +15,6 @@ var drawChim = function(options) {
     }
 
     var defaults = {
-        selector: null,
         stains: ['255, 0, 0', '0, 255, 0', '0, 0, 255', '0, 0, 0']
     };
 
@@ -23,7 +22,23 @@ var drawChim = function(options) {
         this.options = ExtendDefault(defaults, arguments[0]);
     }
 
-    this.canvas = this.options.selector;
+    this.appId = null;
+
+    this._init();
+};
+
+drawChim.prototype.buildCanvas = function(canvasName) {
+    var canvasID = canvasName ? canvasName: 'canvas-1';
+
+    // create canvas element
+    buildElement({
+        elm: 'canvas',
+        buttonId: canvasID,
+        buttonText: null,
+        parentId: this.appId
+    });
+
+    this.canvas = document.getElementById(canvasID);
     this.canvas.width = window.innerWidth;
     this.canvas.height = window.innerHeight;
     this.canvas.bgColor = '#ffffff';
@@ -33,10 +48,11 @@ var drawChim = function(options) {
     this.ctx = this.canvas.getContext('2d');
     this.canvasX;
     this.canvasY;
-    this.appId = 'app-canvas';
 
-    this._init();
-};
+    this.createCanvas();
+    this.createStain();
+    this.setEvents();
+}
 
 drawChim.prototype.resizeCanvas = function() {
     this.canvas.setAttribute('width', window.innerWidth);
@@ -46,12 +62,8 @@ drawChim.prototype.resizeCanvas = function() {
 };
 
 drawChim.prototype._init = function() {
-    // CanvasBoard.createBoard('hello')
-
     this.buildScene();
-    this.createCanvas();
-    this.createStain();
-    this.setEvents();
+    this.buildCanvas();
     this.resizeCanvas()
     this.storeCanvasAsImage();
 };
@@ -67,6 +79,24 @@ drawChim.prototype.createCanvas = function() {
 };
 
 drawChim.prototype.buildScene = function() {
+    var body = document.getElementsByTagName('body'),
+        drawchimId;
+
+    if (body[0].id) {
+        drawchimId = body[0].id;
+    } else {
+        drawchimId = 'go-drawchim';
+        body[0].id = drawchimId;
+    }
+    buildElement({
+        elm: 'div',
+        buttonId: 'app-canvas',
+        buttonText: null,
+        parentId: drawchimId
+    });
+
+    this.appId = 'app-canvas'
+
     buildElement({
         elm: 'span',
         buttonId: 'clear',
