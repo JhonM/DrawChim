@@ -74,7 +74,7 @@ drawChim.prototype.createCanvas = function() {
     this.ctx.lineWidth = 6;
     this.ctx.lineCap = 'round';
     this.ctx.lineJoin = 'round';
-    this.ctx.strokeStyle = 'rgba(58, 56, 68, 0.5)';
+    this.ctx.strokeStyle = 'rgba('+ this.options.stains[0] +', 0.5)';
     // this.ctx.globalCompositeOperation = 'difference';
 };
 
@@ -108,6 +108,13 @@ drawChim.prototype.buildScene = function() {
         elm: 'div',
         buttonId: 'stain-pallet',
         buttonText: null,
+        parentId: this.appId
+    });
+
+    buildElement({
+        elm: 'span',
+        buttonId: 'overview-canvases',
+        buttonText: 'overview',
         parentId: this.appId
     });
 }
@@ -147,11 +154,10 @@ drawChim.prototype.createStain = function() {
     if (this.addColor) {
         stainHolder.innerHTML = "";
     }
-
     var template =
         '<ul class="stains">' +
             '<%for(var index in this.colors) {%>' +
-                '<li class="<%this.colors[index] === "0, 0, 0" ? "is-active" : null %>" data-color="<%this.colors[index]%>" style="background:rgb(<%this.colors[index]%>)"></li>' +
+                '<li class="<%this.colors[index] === "'+ this.options.stains[0] +'" ? "is-active" : null %>" data-color="<%this.colors[index]%>" style="background:rgb(<%this.colors[index]%>)"></li>' +
             '<%}%>' +
             '<li class="add-stain">+</li>' +
         '</ul>',
@@ -182,6 +188,11 @@ drawChim.prototype.setEvents = function() {
         _this.clearCanvas();
     });
 
+    $$('#overview-canvases').on('touchstart', function(e) {
+        e.preventDefault();
+        _this.overview();
+    });
+
     // this.options.clearBtn.addEventListener('touchstart', function() {
     //     _this.clearCanvas();
     // }, false);
@@ -210,6 +221,14 @@ drawChim.prototype.setEvents = function() {
         _this.addStain();
     });
 };
+
+drawChim.prototype.overview = function() {
+    var app = document.getElementById(this.appId)
+    if (!app.classList.length) {
+        app.classList.add('is-active');
+    }
+    console.log('overview triggered')
+}
 
 drawChim.prototype.closeOpenPallet = function(state) {
     if (state === true) {
