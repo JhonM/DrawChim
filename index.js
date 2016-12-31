@@ -3,6 +3,7 @@
 
 var $$ = require('domquery');
 var ExtendDefault = require('./src/extend_default');
+var StringAsNode = require('./src/string-as-node');
 var TemplateEngine = require('./src/template-engine');
 var CanvasBoard = require('./src/canvas-board');
 var Touchy = require('touchy');
@@ -23,6 +24,7 @@ var drawChim = function(options) {
     }
 
     this.appId = null;
+    this.canvasItems = [];
 
     this._init();
 };
@@ -38,7 +40,13 @@ drawChim.prototype.buildCanvas = function(canvasName) {
         parentId: this.appId
     });
 
-    this.canvas = document.getElementById(canvasID);
+    if (this.canvasItems.length === 0) {
+        this.canvas = document.getElementById(canvasID);
+        this.canvasItems.push(this.canvas);
+    } else {
+        this.canvas = document.getElementById(this.canvasItems[0].id);
+    }
+
     this.canvas.width = window.innerWidth;
     this.canvas.height = window.innerHeight;
     this.canvas.bgColor = '#ffffff';
@@ -184,7 +192,7 @@ drawChim.prototype.setEvents = function() {
         _this.drawEnd();
     }, false);
 
-    $$('#clear').on('touchstart', function(){
+    $$('#clear').on('touchstart', function() {
         _this.clearCanvas();
     });
 
@@ -209,16 +217,20 @@ drawChim.prototype.setEvents = function() {
     //     _this.colorPickerCircle(e);
     // });
 
-    $$('#pallets').on('swipe:down', function(){
+    $$('#pallets').on('swipe:down', function() {
         _this.closeOpenPallet(true);
     });
 
-    $$('#header').on('swipe:up', function(){
+    $$('#header').on('swipe:up', function() {
         _this.closeOpenPallet(false);
     });
 
-    $$('.add-stain').on('tap', function(){
+    $$('.add-stain').on('tap', function() {
         _this.addStain();
+    });
+
+    $$('.canvas-overview-item').on('touchstart', function(e) {
+        debugger
     });
 };
 
@@ -226,8 +238,21 @@ drawChim.prototype.overview = function() {
     var app = document.getElementById(this.appId)
     if (!app.classList.length) {
         app.classList.add('is-active');
+
+        var canvasOverviewTmp =
+            '<ul class="canvas-overview-list">' +
+                '<%for(var index in this.items) {%>' +
+                    '<li class="canvas-overview-item" data-canvas-id="<%this.items[index].id%>"></li>' +
+                '<%}%>' +
+            '</ul>';
+
+        var canvasOverview = TemplateEngine(canvasOverviewTmp, {
+            items: this.canvasItems
+        });
+
+        StringAsNode(app, canvasOverview);
+        this.setEvents();
     }
-    console.log('overview triggered')
 }
 
 drawChim.prototype.closeOpenPallet = function(state) {
