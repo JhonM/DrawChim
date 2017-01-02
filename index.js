@@ -25,26 +25,32 @@ var drawChim = function(options) {
 
     this.appId = null;
     this.canvasItems = [];
+    this.num = 0;
 
     this._init();
 };
 
-drawChim.prototype.buildCanvas = function(canvasName) {
-    var canvasID = canvasName ? canvasName: 'canvas-1';
+drawChim.prototype.buildCanvas = function(canvasName, stopBuild) {
+    var num = ++this.num;
+    this.num = num;
+    var canvasID = canvasName ? canvasName: 'canvas-' + num;
 
-    // create canvas element
-    buildElement({
-        elm: 'canvas',
-        buttonId: canvasID,
-        buttonText: null,
-        parentId: this.appId
-    });
+    if (!stopBuild) {
+        // create canvas element
+        buildElement({
+            elm: 'canvas',
+            buttonId: canvasID,
+            buttonText: null,
+            parentId: this.appId
+        });
 
-    if (this.canvasItems.length === 0) {
         this.canvas = document.getElementById(canvasID);
         this.canvasItems.push(this.canvas);
     } else {
-        this.canvas = document.getElementById(this.canvasItems[0].id);
+        this.canvas = document.getElementById(canvasID); //this.canvasItems[0].id
+
+        // console.log(findElementOnID(this.canvasItems, canvasID))
+        this.selectCanvas();
     }
 
     this.canvas.width = window.innerWidth;
@@ -60,6 +66,18 @@ drawChim.prototype.buildCanvas = function(canvasName) {
     this.createCanvas();
     this.createStain();
     this.setEvents();
+}
+
+drawChim.prototype.selectCanvas = function() {
+    var list = this.canvasItems,
+        currentCanvas = this.canvas;
+    for (var i = 0, len = list.length; i < len; i++) {
+        // list[i].style.zIndex = '0'
+        list[i].classList.remove('is-active')
+    }
+
+    // currentCanvas.style.zIndex = '1'
+    currentCanvas.classList.add('is-active');
 }
 
 drawChim.prototype.resizeCanvas = function() {
@@ -230,6 +248,7 @@ drawChim.prototype.setEvents = function() {
     });
 
     $$('.canvas-overview-item').on('touchstart', function(e) {
+        var test = _this;
         debugger
     });
 };
@@ -326,6 +345,7 @@ drawChim.prototype.drawEnd = function() {
 };
 
 drawChim.prototype.storeHistory = function() {
+    // debugger
     var img = this.canvas.toDataURL('image/png');
     history.pushState({imageData: img}, '', window.location.href);
 
@@ -369,6 +389,17 @@ function buildElement(buildOptions) {
     // return if there is no object
     if (parentElm === null) return;
     parentElm.appendChild(createElm);
+}
+
+function findElementOnID(list, itemID) {
+    var currentItem;
+    list.forEach(function (item) {
+      if (item.id === 'canvas-1') {
+          currentItem = item;
+      }
+    });
+
+    return currentItem;
 }
 
 module.exports = drawChim;
