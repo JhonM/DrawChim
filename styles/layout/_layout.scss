@@ -1,4 +1,5 @@
 #go-drawchim {
+    margin: 0;
     background-color: $canvas-background;
 }
 
@@ -26,20 +27,19 @@
 }
 
 #app-canvas {
+    position: relative;
     background-color: $canvas-background;
     @include display(flex);
 
     canvas {
         position: absolute;
-        @include flex(1);
-        // margin-top: 40px;
         box-shadow: 1px 1px 2px 0 rgba(0, 0, 0, .1);
-        z-index: 1;
+        @include flex(1);
         @include transform(translateY(0%) scale(1));
         @include transition(all .1s ease-in-out);
 
         &.is-active {
-            z-index: 2;
+            @include animation(fadeInDownBig .5s ease-out);
         }
     }
 
