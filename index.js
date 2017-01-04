@@ -58,8 +58,6 @@ drawChim.prototype.buildCanvas = function(canvasName, stopBuild) {
                 list[i].classList.remove('is-active')
                 ls.setItem('canvasItem' + '-' + list[i].id, list[i].id, 3600);
             }
-
-            this.setCurrentCanvas();
         }
     } else {
         this.canvas = document.getElementById(canvasID); //this.canvasItems[0].id
@@ -67,6 +65,8 @@ drawChim.prototype.buildCanvas = function(canvasName, stopBuild) {
         // console.log(findElementOnID(this.canvasItems, canvasID))
         this.selectCanvas();
     }
+
+    this.setCurrentCanvas();
 
     this.canvas.width = window.innerWidth;
     this.canvas.height = window.innerHeight;
@@ -289,15 +289,21 @@ drawChim.prototype.overview = function() {
             '<ul class="canvas-overview-list">' +
                 '<%for(var index in this.items) {%>' +
                     '<li class="canvas-overview-item" data-canvas-id="<%this.items[index].id%>">' +
-                        '<img src="<%this.images%>" />' +
+                        '<img src="<%this.imagesURL[index]%>" />' +
                     '</li>' +
                 '<%}%>' +
             '</ul>';
-        var imgSrc = ls.getItem('canvasImage' + '-' + this.canvas.id)
+
+        var getBase64 = [];
+
+        for (var i = 0, len = this.canvasItems.length; i < len; i++) {
+            var base64URL = ls.getItem('canvasImage' + '-' + this.canvasItems[i].id)
+            getBase64.push(base64URL);
+        }
 
         var canvasOverview = TemplateEngine(canvasOverviewTmp, {
             items: this.canvasItems,
-            images: imgSrc
+            imagesURL: getBase64
         });
 
         StringAsNode(app, canvasOverview);
