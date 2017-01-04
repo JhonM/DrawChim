@@ -288,12 +288,16 @@ drawChim.prototype.overview = function() {
         var canvasOverviewTmp =
             '<ul class="canvas-overview-list">' +
                 '<%for(var index in this.items) {%>' +
-                    '<li class="canvas-overview-item" data-canvas-id="<%this.items[index].id%>"></li>' +
+                    '<li class="canvas-overview-item" data-canvas-id="<%this.items[index].id%>">' +
+                        '<img src="<%this.images%>" />' +
+                    '</li>' +
                 '<%}%>' +
             '</ul>';
+        var imgSrc = ls.getItem('canvasImage' + '-' + this.canvas.id)
 
         var canvasOverview = TemplateEngine(canvasOverviewTmp, {
-            items: this.canvasItems
+            items: this.canvasItems,
+            images: imgSrc
         });
 
         StringAsNode(app, canvasOverview);
