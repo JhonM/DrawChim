@@ -88,6 +88,14 @@ html {
   height: 44px;
   z-index: 3; }
 
+#app-settings {
+  position: fixed;
+  display: block;
+  right: 2%;
+  bottom: 10px;
+  height: 44px;
+  z-index: 3; }
+
 #app-canvas {
   position: relative;
   background-color: #F4F4F4;

@@ -166,6 +166,13 @@ drawChim.prototype.buildScene = function() {
         buttonText: 'overview',
         parentId: this.appId
     });
+
+    buildElement({
+        elm: 'span',
+        buttonId: 'app-settings',
+        buttonText: 'Settings',
+        parentId: this.appId
+    });
 }
 
 drawChim.prototype.addStain = function() {
@@ -250,6 +257,10 @@ drawChim.prototype.setEvents = function() {
         _this.swapColor(e);
     });
 
+    $$('#app-settings').on('touchstart', function(e) {
+        _this.filters(e);
+    });
+
     $$(window).on('resize', function(){
         _this.resizeCanvas();
     });
@@ -309,6 +320,22 @@ drawChim.prototype.overview = function() {
         StringAsNode(app, canvasOverview);
         this.setEvents();
     }
+}
+
+drawChim.prototype.filters = function() {
+        var template =
+            "<div>" +
+                "<h1>Kies filter</h1>" +
+            "</div>",
+            stains = TemplateEngine(template, {
+                colors: ''
+            });
+
+        var modal = new Modalblanc({
+            content: stains,
+            animation: 'slide-in-right'
+        });
+        modal.open();
 }
 
 drawChim.prototype.closeOpenPallet = function(state) {
