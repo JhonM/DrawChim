@@ -59,6 +59,8 @@ drawChim.prototype.buildCanvas = function(canvasName, stopBuild) {
                 ls.setItem('canvasItem' + '-' + list[i].id, list[i].id, 3600);
             }
         }
+        this.setCurrentCanvas();
+        this.selectCanvas();
     } else {
         this.canvas = document.getElementById(canvasID); //this.canvasItems[0].id
 
@@ -66,7 +68,6 @@ drawChim.prototype.buildCanvas = function(canvasName, stopBuild) {
         this.selectCanvas();
     }
 
-    this.setCurrentCanvas();
 
     this.canvas.width = window.innerWidth;
     this.canvas.height = window.innerHeight;
@@ -284,10 +285,12 @@ drawChim.prototype.setEvents = function() {
     $$('.canvas-overview-item').on('touchstart', function(e) {
         var app = document.getElementById(_this.appId);
         var canvasID = e.currentTarget.dataset.canvasId;
+        var overviewHolder = document.getElementsByClassName('canvas-overview-list');
         _this.buildCanvas(canvasID, true);
 
-        // remove is-active class
+        // remove is-active class + canvas-overview-list
         app.classList.remove('is-active');
+        app.removeChild(overviewHolder[0]);
     });
 };
 
