@@ -107,7 +107,7 @@ drawChim.prototype.resizeCanvas = function() {
 };
 
 drawChim.prototype._init = function() {
-    var DefaultCanvas =  ls.getItem('canvasItem-canvas-1');
+    var DefaultCanvas =  ls.getItem('canvasItem-' + this.options.canvas[0]);
     var newKey, newCanvas;
 
     this.buildScene();
