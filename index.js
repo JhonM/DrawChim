@@ -17,7 +17,8 @@ var drawChim = function(options) {
     }
 
     var defaults = {
-        stains: ['255, 0, 0', '0, 255, 0', '0, 0, 255', '0, 0, 0']
+        stains: ['255, 0, 0', '0, 255, 0', '0, 0, 255', '0, 0, 0'],
+        canvas: ['canvas-1']
     };
 
     if (arguments[0] && typeof arguments[0] === 'object') {
@@ -28,6 +29,7 @@ var drawChim = function(options) {
     this.canvasItems = [];
     this.canvasObject = {};
     this.num = 0;
+    this.settingsActionSet = false;
 
     this._init();
 };
@@ -56,7 +58,7 @@ drawChim.prototype.buildCanvas = function(canvasName, stopBuild) {
             for (var i = 0, len = list.length; i < len; i++) {
                 // list[i].style.zIndex = '0'
                 list[i].classList.remove('is-active')
-                ls.setItem('canvasItem' + '-' + list[i].id, list[i].id, 3600);
+                ls.setItem('canvasItem' + '-' + list[i].id, list[i].id, 28425600); // keep in localstorage for 1 year
             }
         }
         this.setCurrentCanvas();
@@ -105,8 +107,25 @@ drawChim.prototype.resizeCanvas = function() {
 };
 
 drawChim.prototype._init = function() {
+    var DefaultCanvas =  ls.getItem('canvasItem-canvas-1');
+    var newKey, newCanvas;
+
     this.buildScene();
-    this.buildCanvas();
+
+    if (DefaultCanvas) {
+        for (var key in localStorage){
+            if (key.match(/canvasItem-/)) {
+                newKey = key.replace('canvasItem-', '')
+                this.buildCanvas(newKey);
+            }
+        }
+    } else {
+        for (var index in this.options.canvas){
+            newCanvas = this.options.canvas[index];
+            this.buildCanvas(newCanvas);
+        }
+    }
+
     this.resizeCanvas();
     this.storeCanvasAsImage();
 };
@@ -259,7 +278,12 @@ drawChim.prototype.setEvents = function() {
     });
 
     $$('#app-settings').on('touchstart', function(e) {
-        _this.filters(e);
+        e.preventDefault();
+        if (!_this.settingsActionSet) {
+            _this.filters(e);
+        } else {
+            _this.settingsActionSet = false;
+        }
     });
 
     $$(window).on('resize', function(){
@@ -330,15 +354,15 @@ drawChim.prototype.filters = function() {
             "<div>" +
                 "<h1>Kies filter</h1>" +
             "</div>",
-            stains = TemplateEngine(template, {
+            filters = TemplateEngine(template, {
                 colors: ''
             });
 
         var modal = new Modalblanc({
-            content: stains,
-            animation: 'slide-in-right'
+            content: filters
         });
         modal.open();
+        this.settingsActionSet = true;
 }
 
 drawChim.prototype.closeOpenPallet = function(state) {
