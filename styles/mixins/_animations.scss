@@ -1,0 +1,9 @@
+@include keyframes(fadeInDownBig) {
+  0% {
+    @include opacity(0);
+    @include transform(translateY(768px));
+  }
+  100% {
+    @include transform(translateY(0));
+  }
+}

@@ -4,13 +4,13 @@
 @import 'variables';
 
 // mixins
+@import 'mixins/keyframes';
+@import 'mixins/animations';
 @import "mixins/custom";
-
-// Base
-@import 'base/base';
 
 // Layout
 @import 'layout/layout';
 
 // modules
 @import 'modules/stains';
+@import "modules/canvas-navigator";

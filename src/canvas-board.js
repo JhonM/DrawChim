@@ -3,6 +3,7 @@
 
 var $$ = require('domquery');
 var ExtendDefault = require('./extend_default');
+var TemplateEngine = require('./template-engine');
 
 var CanvasBoard = function(options) {
     var defaults = {

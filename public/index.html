@@ -9,17 +9,27 @@
     <link rel="stylesheet" href="css/app.css">
     <link rel="stylesheet" href="css/modalblanc.css">
     <script src="js/drawchim.js"></script>
+	<!-- Home screen icons -->
+	<link rel="apple-touch-icon" href="img/apple-touch-icon.png" />
+	<link rel="apple-touch-icon" sizes="72x72" href="img/apple-touch-icon-72-72.png" />
+	<link rel="apple-touch-icon" sizes="114x114" href="img/apple-touch-icon-114-114.png" />
+	<link rel="apple-touch-icon" sizes="144x144" href="img/apple-touch-icon-144-144.png" />
+
+	<!-- iPad -->
+	<link rel="apple-touch-startup-image" href="img/startup-l-ipad.png" media="screen and (min-device-width: 481px) and (max-device-width: 1024px) and (orientation:landscape)" />
+	<link rel="apple-touch-startup-image" href="img/startup-p-ipad.png" media="screen and (min-device-width: 481px) and (max-device-width: 1024px) and (orientation:portrait)" />
+	<!-- iPhone (retina) -->
+	<link rel="apple-touch-startup-image" href="img/startup.png" media="screen and (max-device-width: 640px)" />
 </head>
 <body>
-    <div id="app">
-        <section id="app-canvas">
-            <canvas id="canvas"></canvas>
-        </section>
-    </div>
-
     <script>
         var myCanvas = new Drawchim({
-            selector: document.getElementById('canvas')
+            stains: [
+                '102,42,72', '178,73,125',
+                '178,73,178', '73,178,178',
+                '104,94,77'
+            ],
+            canvas: ['board-1', 'board-2', 'board-3', 'board-4']
         });
     </script>
 </body>
