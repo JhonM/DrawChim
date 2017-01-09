@@ -3,8 +3,10 @@
 
 var $$ = require('domquery');
 var ExtendDefault = require('./src/extend_default');
+var StringAsNode = require('./src/string-as-node');
 var TemplateEngine = require('./src/template-engine');
-// var CanvasBoard = require('./src/canvas-board');
+var CanvasBoard = require('./src/canvas-board');
+var ls = require('./src/local-storage');
 var Touchy = require('touchy');
 var Modalblanc = require('modalblanc');
 Touchy.enableOn(document);
@@ -15,15 +17,60 @@ var drawChim = function(options) {
     }
 
     var defaults = {
-        selector: null,
-        stains: ['255, 0, 0', '0, 255, 0', '0, 0, 255', '0, 0, 0']
+        stains: ['255, 0, 0', '0, 255, 0', '0, 0, 255', '0, 0, 0'],
+        canvas: ['canvas-1']
     };
 
     if (arguments[0] && typeof arguments[0] === 'object') {
         this.options = ExtendDefault(defaults, arguments[0]);
     }
 
-    this.canvas = this.options.selector;
+    this.appId = null;
+    this.canvasItems = [];
+    this.canvasObject = {};
+    this.num = 0;
+    this.settingsActionSet = false;
+
+    this._init();
+};
+
+drawChim.prototype.buildCanvas = function(canvasName, stopBuild) {
+    var num = ++this.num;
+    this.num = num;
+    var canvasID = canvasName ? canvasName : 'canvas-' + num;
+
+    if (!stopBuild) {
+        // create canvas element
+        buildElement({
+            elm: 'canvas',
+            buttonId: canvasID,
+            buttonText: null,
+            parentId: this.appId
+        });
+
+        this.canvas = document.getElementById(canvasID);
+        this.canvasItems.push(this.canvas);
+
+        if (this.canvasItems.length > 1) {
+            // if there previous is-active classes remove them
+            var list = this.canvasItems,
+                currentCanvas = this.canvas;
+            for (var i = 0, len = list.length; i < len; i++) {
+                // list[i].style.zIndex = '0'
+                list[i].classList.remove('is-active')
+                ls.setItem('canvasItem' + '-' + list[i].id, list[i].id, 28425600); // keep in localstorage for 1 year
+            }
+        }
+        this.setCurrentCanvas();
+        this.selectCanvas();
+    } else {
+        this.canvas = document.getElementById(canvasID); //this.canvasItems[0].id
+
+        // console.log(findElementOnID(this.canvasItems, canvasID))
+        this.selectCanvas();
+    }
+
+
     this.canvas.width = window.innerWidth;
     this.canvas.height = window.innerHeight;
     this.canvas.bgColor = '#ffffff';
@@ -33,10 +80,24 @@ var drawChim = function(options) {
     this.ctx = this.canvas.getContext('2d');
     this.canvasX;
     this.canvasY;
-    this.appId = 'app-canvas';
 
-    this._init();
-};
+    this.createCanvas();
+    this.createStain();
+    this.storeCanvasAsImage();
+    this.setEvents();
+}
+
+drawChim.prototype.selectCanvas = function() {
+    var list = this.canvasItems,
+        currentCanvas = this.canvas;
+    for (var i = 0, len = list.length; i < len; i++) {
+        list[i].style.zIndex = '1'
+        list[i].classList.remove('is-active')
+    }
+
+    currentCanvas.style.zIndex = '2'
+    currentCanvas.classList.add('is-active');
+}
 
 drawChim.prototype.resizeCanvas = function() {
     this.canvas.setAttribute('width', window.innerWidth);
@@ -46,13 +107,26 @@ drawChim.prototype.resizeCanvas = function() {
 };
 
 drawChim.prototype._init = function() {
-    // CanvasBoard.createBoard('hello')
+    var DefaultCanvas =  ls.getItem('canvasItem-' + this.options.canvas[0]);
+    var newKey, newCanvas;
 
     this.buildScene();
-    this.createCanvas();
-    this.createStain();
-    this.setEvents();
-    this.resizeCanvas()
+
+    if (DefaultCanvas) {
+        for (var key in localStorage){
+            if (key.match(/canvasItem-/)) {
+                newKey = key.replace('canvasItem-', '')
+                this.buildCanvas(newKey);
+            }
+        }
+    } else {
+        for (var index in this.options.canvas){
+            newCanvas = this.options.canvas[index];
+            this.buildCanvas(newCanvas);
+        }
+    }
+
+    this.resizeCanvas();
     this.storeCanvasAsImage();
 };
 
@@ -62,11 +136,36 @@ drawChim.prototype.createCanvas = function() {
     this.ctx.lineWidth = 6;
     this.ctx.lineCap = 'round';
     this.ctx.lineJoin = 'round';
-    this.ctx.strokeStyle = 'rgba(58, 56, 68, 0.5)';
+    this.ctx.strokeStyle = 'rgba('+ this.options.stains[0] +', 0.5)';
     // this.ctx.globalCompositeOperation = 'difference';
 };
 
+drawChim.prototype.setCurrentCanvas = function () {
+    // select last item in array
+    var lastItemArray = this.canvasItems.slice(-1)[0];
+    // add class to last item
+    lastItemArray.classList.add('is-active');
+};
+
 drawChim.prototype.buildScene = function() {
+    var body = document.getElementsByTagName('body'),
+        drawchimId;
+
+    if (body[0].id) {
+        drawchimId = body[0].id;
+    } else {
+        drawchimId = 'go-drawchim';
+        body[0].id = drawchimId;
+    }
+    buildElement({
+        elm: 'div',
+        buttonId: 'app-canvas',
+        buttonText: null,
+        parentId: drawchimId
+    });
+
+    this.appId = 'app-canvas'
+
     buildElement({
         elm: 'span',
         buttonId: 'clear',
@@ -78,6 +177,20 @@ drawChim.prototype.buildScene = function() {
         elm: 'div',
         buttonId: 'stain-pallet',
         buttonText: null,
+        parentId: this.appId
+    });
+
+    buildElement({
+        elm: 'span',
+        buttonId: 'overview-canvases',
+        buttonText: 'overview',
+        parentId: this.appId
+    });
+
+    buildElement({
+        elm: 'span',
+        buttonId: 'app-settings',
+        buttonText: 'Settings',
         parentId: this.appId
     });
 }
@@ -117,11 +230,10 @@ drawChim.prototype.createStain = function() {
     if (this.addColor) {
         stainHolder.innerHTML = "";
     }
-
     var template =
         '<ul class="stains">' +
             '<%for(var index in this.colors) {%>' +
-                '<li class="<%this.colors[index] === "0, 0, 0" ? "is-active" : null %>" data-color="<%this.colors[index]%>" style="background:rgb(<%this.colors[index]%>)"></li>' +
+                '<li class="<%this.colors[index] === "'+ this.options.stains[0] +'" ? "is-active" : null %>" data-color="<%this.colors[index]%>" style="background:rgb(<%this.colors[index]%>)"></li>' +
             '<%}%>' +
             '<li class="add-stain">+</li>' +
         '</ul>',
@@ -148,8 +260,13 @@ drawChim.prototype.setEvents = function() {
         _this.drawEnd();
     }, false);
 
-    $$('#clear').on('touchstart', function(){
+    $$('#clear').on('touchstart', function() {
         _this.clearCanvas();
+    });
+
+    $$('#overview-canvases').on('touchstart', function(e) {
+        e.preventDefault();
+        _this.overview();
     });
 
     // this.options.clearBtn.addEventListener('touchstart', function() {
@@ -160,6 +277,15 @@ drawChim.prototype.setEvents = function() {
         _this.swapColor(e);
     });
 
+    $$('#app-settings').on('touchstart', function(e) {
+        e.preventDefault();
+        if (!_this.settingsActionSet) {
+            _this.filters(e);
+        } else {
+            _this.settingsActionSet = false;
+        }
+    });
+
     $$(window).on('resize', function(){
         _this.resizeCanvas();
     });
@@ -168,18 +294,76 @@ drawChim.prototype.setEvents = function() {
     //     _this.colorPickerCircle(e);
     // });
 
-    $$('#pallets').on('swipe:down', function(){
+    $$('#pallets').on('swipe:down', function() {
         _this.closeOpenPallet(true);
     });
 
-    $$('#header').on('swipe:up', function(){
+    $$('#header').on('swipe:up', function() {
         _this.closeOpenPallet(false);
     });
 
-    $$('.add-stain').on('tap', function(){
+    $$('.add-stain').on('tap', function() {
         _this.addStain();
     });
+
+    $$('.canvas-overview-item').on('touchstart', function(e) {
+        var app = document.getElementById(_this.appId);
+        var canvasID = e.currentTarget.dataset.canvasId;
+        var overviewHolder = document.getElementsByClassName('canvas-overview-list');
+        _this.buildCanvas(canvasID, true);
+
+        // remove is-active class + canvas-overview-list
+        app.classList.remove('is-active');
+        app.removeChild(overviewHolder[0]);
+    });
 };
+
+drawChim.prototype.overview = function() {
+    var app = document.getElementById(this.appId);
+    if (!app.classList.length) {
+        app.classList.add('is-active');
+
+        var canvasOverviewTmp =
+            '<ul class="canvas-overview-list">' +
+                '<%for(var index in this.items) {%>' +
+                    '<li class="canvas-overview-item" data-canvas-id="<%this.items[index].id%>">' +
+                        '<img src="<%this.imagesURL[index]%>" />' +
+                    '</li>' +
+                '<%}%>' +
+            '</ul>';
+
+        var getBase64 = [];
+
+        for (var i = 0, len = this.canvasItems.length; i < len; i++) {
+            var base64URL = ls.getItem('canvasImage' + '-' + this.canvasItems[i].id)
+            getBase64.push(base64URL);
+        }
+
+        var canvasOverview = TemplateEngine(canvasOverviewTmp, {
+            items: this.canvasItems,
+            imagesURL: getBase64
+        });
+
+        StringAsNode(app, canvasOverview);
+        this.setEvents();
+    }
+}
+
+drawChim.prototype.filters = function() {
+        var template =
+            "<div>" +
+                "<h1>Kies filter</h1>" +
+            "</div>",
+            filters = TemplateEngine(template, {
+                colors: ''
+            });
+
+        var modal = new Modalblanc({
+            content: filters
+        });
+        modal.open();
+        this.settingsActionSet = true;
+}
 
 drawChim.prototype.closeOpenPallet = function(state) {
     if (state === true) {
@@ -252,12 +436,11 @@ drawChim.prototype.drawEnd = function() {
 };
 
 drawChim.prototype.storeHistory = function() {
+    // debugger
     var img = this.canvas.toDataURL('image/png');
     history.pushState({imageData: img}, '', window.location.href);
 
-    if (window.localStorage) {
-        localStorage.curImg = img;
-    }
+    ls.setItem('canvasImage' + '-' + this.canvas.id, img);
 };
 
 drawChim.prototype.storeCanvasAsImage = function() {
@@ -269,10 +452,9 @@ drawChim.prototype.storeCanvasAsImage = function() {
             _this.ctx.drawImage(img, 0, 0);
         };
 
-        if (localStorage.curImg) {
-            img.src = localStorage.curImg;
-            this.blankCanvas = false;
-        }
+        var imgSrc = ls.getItem('canvasImage' + '-' + this.canvas.id);
+        img.src = imgSrc;
+        this.blankCanvas = false;
     }
 };
 
@@ -295,6 +477,17 @@ function buildElement(buildOptions) {
     // return if there is no object
     if (parentElm === null) return;
     parentElm.appendChild(createElm);
+}
+
+function findElementOnID(list, itemID) {
+    var currentItem;
+    list.forEach(function (item) {
+      if (item.id === 'canvas-1') {
+          currentItem = item;
+      }
+    });
+
+    return currentItem;
 }
 
 module.exports = drawChim;
