@@ -166,12 +166,12 @@ drawChim.prototype.buildScene = function() {
 
     this.appId = 'app-canvas'
 
-    buildElement({
-        elm: 'span',
-        buttonId: 'clear',
-        buttonText: null,
-        parentId: this.appId
-    });
+    // buildElement({
+    //     elm: 'span',
+    //     buttonId: 'clear',
+    //     buttonText: null,
+    //     parentId: this.appId
+    // });
 
     buildElement({
         elm: 'div',
@@ -278,12 +278,19 @@ drawChim.prototype.setEvents = function() {
     });
 
     $$('#app-settings').on('touchstart', function(e) {
-        e.preventDefault();
-        if (!_this.settingsActionSet) {
-            _this.filters(e);
+        // debugger
+        if (this.classList.value === 'is-active') {
+            return
+            e.preventDefault();
         } else {
-            _this.settingsActionSet = false;
+            this.classList.add('is-active');
+            _this.filters();
         }
+        // if (!_this.settingsActionSet) {
+        //     _this.filters();
+        // } else {
+        //     _this.settingsActionSet = false;
+        // }
     });
 
     $$(window).on('resize', function(){
@@ -350,19 +357,20 @@ drawChim.prototype.overview = function() {
 }
 
 drawChim.prototype.filters = function() {
-        var template =
-            "<div>" +
-                "<h1>Kies filter</h1>" +
-            "</div>",
-            filters = TemplateEngine(template, {
-                colors: ''
-            });
-
-        var modal = new Modalblanc({
-            content: filters
-        });
-        modal.open();
-        this.settingsActionSet = true;
+    return 'jhon'
+        // var template =
+        //     "<div>" +
+        //         "<h1>Kies filter</h1>" +
+        //     "</div>",
+        //     filters = TemplateEngine(template, {
+        //         colors: ''
+        //     });
+        //
+        // var modal = new Modalblanc({
+        //     content: filters
+        // });
+        // modal.open();
+        // this.settingsActionSet = true;
 }
 
 drawChim.prototype.closeOpenPallet = function(state) {
