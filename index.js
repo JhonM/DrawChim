@@ -278,19 +278,8 @@ drawChim.prototype.setEvents = function() {
     });
 
     $$('#app-settings').on('touchstart', function(e) {
-        // debugger
-        if (this.classList.value === 'is-active') {
-            return
-            e.preventDefault();
-        } else {
-            this.classList.add('is-active');
-            _this.filters();
-        }
-        // if (!_this.settingsActionSet) {
-        //     _this.filters();
-        // } else {
-        //     _this.settingsActionSet = false;
-        // }
+        e.preventDefault();
+        _this.filters();
     });
 
     $$(window).on('resize', function(){
@@ -357,20 +346,32 @@ drawChim.prototype.overview = function() {
 }
 
 drawChim.prototype.filters = function() {
-    return 'jhon'
-        // var template =
-        //     "<div>" +
-        //         "<h1>Kies filter</h1>" +
-        //     "</div>",
-        //     filters = TemplateEngine(template, {
-        //         colors: ''
-        //     });
-        //
-        // var modal = new Modalblanc({
-        //     content: filters
-        // });
-        // modal.open();
-        // this.settingsActionSet = true;
+    var settings = document.getElementById('app-settings');
+
+    if (settings.classList.value === 'is-active') return;
+
+    var template =
+        "<div>" +
+            "<h1>Kies filter</h1>" +
+        "</div>",
+        filters = TemplateEngine(template, {
+            colors: ''
+        });
+
+    var modal = new Modalblanc({
+        content: filters,
+        closeButton: false
+    });
+    modal.open();
+
+    settings.classList.add('is-active');
+
+    buildElement({
+        elm: 'a',
+        buttonId: 'close-modal',
+        buttonText: 'close modal',
+        parentId: this.appId
+    });
 }
 
 drawChim.prototype.closeOpenPallet = function(state) {
