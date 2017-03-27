@@ -187,12 +187,12 @@ drawChim.prototype.buildScene = function() {
         parentId: this.appId
     });
 
-    buildElement({
-        elm: 'span',
-        buttonId: 'app-settings',
-        buttonText: 'Settings',
-        parentId: this.appId
-    });
+    // buildElement({
+    //     elm: 'span',
+    //     buttonId: 'app-settings',
+    //     buttonText: 'Settings',
+    //     parentId: this.appId
+    // });
 }
 
 drawChim.prototype.addStain = function() {
