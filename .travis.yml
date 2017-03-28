@@ -1,14 +1,20 @@
 language: node_js
 node_js:
   - "5.0.0"
+sudo: false
+before_install:
+  - curl -o- -L https://yarnpkg.com/install.sh | bash
+  - export PATH=$HOME/.yarn/bin:$PATH
+cache:
+  yarn: true
 install:
-  - npm install phantomjs -g
-  - npm install -g mocha-phantomjs
-  - npm install
+  - yarn add phantomjs
+  - yarn add mocha-phantomjs
+  - yarn
 before_script:
   - phantomjs --version
   - mocha-phantomjs --version
 script:
-  - npm bin
-  - npm run build-js
-  - npm run test
+  - yarn bin
+  - yarn build-js
+  - yarn test
