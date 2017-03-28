@@ -8,7 +8,7 @@ before_install:
 cache:
   yarn: true
 install:
-  - yarn add phantomjs
+  - yarn add phantomjs-prebuilt
   - yarn add mocha-phantomjs
   - yarn
 before_script:
