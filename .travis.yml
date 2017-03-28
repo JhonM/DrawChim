@@ -8,8 +8,8 @@ before_install:
 cache:
   yarn: true
 install:
-  - yarn add phantomjs-prebuilt
-  - yarn add mocha-phantomjs
+  - npm install phantomjs -g
+  - npm install -g mocha-phantomjs
   - yarn
 before_script:
   - phantomjs --version
