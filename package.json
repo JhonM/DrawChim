@@ -3,7 +3,9 @@
   "version": "0.0.1",
   "description": "DrawChim is a simple html5 based draw application. I made it for my son.",
   "main": "index.js",
-  "dependencies": {},
+  "dependencies": {
+    "http-server": "^0.9.0"
+  },
   "devDependencies": {
     "browserify": "^13.1.0",
     "chai": "^3.3.0",
@@ -17,17 +19,17 @@
     "watchify": "^3.6.1"
   },
   "scripts": {
-    "watch": "npm run watch-scss & npm run watch-js",
-    "watch-js": "watchify index.js -d --s Drawchim -o public/js/drawchim.js -v",
-    "watch-scss": "sass --watch styles:public/css",
-    "build-debug": "browserify index.js -d --s Drawchim > public/js/drawchim.js",
-    "build-min": "browserify index.js --s Drawchim | uglifyjs -c > public/js/drawchim.min.js",
+    "watch": "npm run watch-scss & npm run watch-js & http-server",
+    "watch-js": "watchify index.js -d --s Drawchim -o dist/drawchim.js -v",
+    "watch-scss": "sass --watch styles:dist",
+    "build-debug": "browserify index.js -d --s Drawchim > dist/drawchim.js",
+    "build-min": "browserify index.js --s Drawchim | uglifyjs -c > dist/drawchim.min.js",
     "build-js": "npm run build-debug && npm run build-min",
-    "build-css": "sass styles/drawchim.scss public/css/drawchim.css",
+    "build-css": "sass styles/drawchim.scss dist/drawchim.css",
     "build-files": "npm run build-js && npm run build-css",
     "test-phantom": "make test",
     "test-mocha": "./bin/mocha-phantomjs testRunner.html",
-    "test": "npm run test-phantom && npm run test-mocha"
+    "test": "npm run build-min && npm run test-phantom && npm run test-mocha"
   },
   "bin": "bin/phantomjs",
   "repository": {

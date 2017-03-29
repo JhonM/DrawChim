@@ -166,12 +166,12 @@ drawChim.prototype.buildScene = function() {
 
     this.appId = 'app-canvas'
 
-    buildElement({
-        elm: 'span',
-        buttonId: 'clear',
-        buttonText: null,
-        parentId: this.appId
-    });
+    // buildElement({
+    //     elm: 'span',
+    //     buttonId: 'clear',
+    //     buttonText: null,
+    //     parentId: this.appId
+    // });
 
     buildElement({
         elm: 'div',
@@ -187,12 +187,12 @@ drawChim.prototype.buildScene = function() {
         parentId: this.appId
     });
 
-    buildElement({
-        elm: 'span',
-        buttonId: 'app-settings',
-        buttonText: 'Settings',
-        parentId: this.appId
-    });
+    // buildElement({
+    //     elm: 'span',
+    //     buttonId: 'app-settings',
+    //     buttonText: 'Settings',
+    //     parentId: this.appId
+    // });
 }
 
 drawChim.prototype.addStain = function() {
@@ -279,11 +279,7 @@ drawChim.prototype.setEvents = function() {
 
     $$('#app-settings').on('touchstart', function(e) {
         e.preventDefault();
-        if (!_this.settingsActionSet) {
-            _this.filters(e);
-        } else {
-            _this.settingsActionSet = false;
-        }
+        _this.filters();
     });
 
     $$(window).on('resize', function(){
@@ -350,19 +346,32 @@ drawChim.prototype.overview = function() {
 }
 
 drawChim.prototype.filters = function() {
-        var template =
-            "<div>" +
-                "<h1>Kies filter</h1>" +
-            "</div>",
-            filters = TemplateEngine(template, {
-                colors: ''
-            });
+    var settings = document.getElementById('app-settings');
 
-        var modal = new Modalblanc({
-            content: filters
+    if (settings.classList.value === 'is-active') return;
+
+    var template =
+        "<div>" +
+            "<h1>Kies filter</h1>" +
+        "</div>",
+        filters = TemplateEngine(template, {
+            colors: ''
         });
-        modal.open();
-        this.settingsActionSet = true;
+
+    var modal = new Modalblanc({
+        content: filters,
+        closeButton: false
+    });
+    modal.open();
+
+    settings.classList.add('is-active');
+
+    buildElement({
+        elm: 'a',
+        buttonId: 'close-modal',
+        buttonText: 'close modal',
+        parentId: this.appId
+    });
 }
 
 drawChim.prototype.closeOpenPallet = function(state) {
