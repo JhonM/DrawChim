@@ -32,10 +32,7 @@
     "test": "npm run build-min && npm run test-phantom && npm run test-mocha"
   },
   "bin": "bin/phantomjs",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/JhonM/DrawChim.git"
-  },
+  "repository": "git+https://github.com/JhonM/DrawChim.git",
   "keywords": [
     "Javascript",
     "drawchim"
