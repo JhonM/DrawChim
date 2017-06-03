@@ -4,12 +4,14 @@
   "description": "DrawChim is a simple html5 based draw application. I made it for my son.",
   "main": "index.js",
   "dependencies": {
+    "eslintify": "^3.1.0",
     "http-server": "^0.9.0"
   },
   "devDependencies": {
     "browserify": "^13.1.0",
     "chai": "^3.3.0",
     "domquery": "^3.0.0",
+    "eslint": "^3.19.0",
     "mocha": "^3.1.2",
     "mocha-phantomjs-core": "^2.1.1",
     "modalblanc": "^1.1.1",
