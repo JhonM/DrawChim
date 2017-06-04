@@ -46,8 +46,8 @@ var LocalStorage = {
 
         if (typeof expiry === 'number') {
             value = {
-            __data: value,
-            __expiry: Date.now() + (parseInt(expiry) * 1000)
+                __data: value,
+                __expiry: Date.now() + (parseInt(expiry) * 1000)
             };
         }
 
@@ -84,6 +84,6 @@ var LocalStorage = {
             return false;
         }
     }
-}
+};
 
 module.exports = LocalStorage;
