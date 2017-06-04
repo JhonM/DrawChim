@@ -9,7 +9,7 @@
         state: 'lief'
     }));
 
-    var skillTemplate = 
+    var skillTemplate =
         'My Skills:' +
         '<%for(var index in this.skills) {%>' +
         '<a href="#"><%this.skills[index]%></a>' +
@@ -34,7 +34,7 @@ module.exports = function(html, options) {
         return add;
     };
 
-    while(match = re.exec(html)) {
+    while((match = re.exec(html))) {
         add(html.slice(cursor, match.index))(match[1], true);
         cursor = match.index + match[0].length;
     }
@@ -45,6 +45,7 @@ module.exports = function(html, options) {
     try {
         result = new Function('obj', code).apply(options, [options]);
     } catch(err) {
+        // eslint-disable-next-line no-console
         console.error('\'' + err.message + '\'', ' in \n\nCode:\n', code, '\n');
     }
 
