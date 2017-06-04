@@ -5,13 +5,12 @@ var $$ = require('domquery');
 var ExtendDefault = require('./src/extend_default');
 var StringAsNode = require('./src/string-as-node');
 var TemplateEngine = require('./src/template-engine');
-var CanvasBoard = require('./src/canvas-board');
 var ls = require('./src/local-storage');
 var Touchy = require('touchy');
 var Modalblanc = require('modalblanc');
 Touchy.enableOn(document);
 
-var drawChim = function(options) {
+var drawChim = function() {
     if (!(this instanceof drawChim)) {
         return new drawChim();
     }
@@ -53,8 +52,7 @@ drawChim.prototype.buildCanvas = function(canvasName, stopBuild) {
 
         if (this.canvasItems.length > 1) {
             // if there previous is-active classes remove them
-            var list = this.canvasItems,
-                currentCanvas = this.canvas;
+            var list = this.canvasItems;
             for (var i = 0, len = list.length; i < len; i++) {
                 // list[i].style.zIndex = '0'
                 list[i].classList.remove('is-active');
@@ -256,7 +254,7 @@ drawChim.prototype.setEvents = function() {
         _this.drawMove(e);
     }, false);
 
-    this.canvas.addEventListener('touchend', function(e) {
+    this.canvas.addEventListener('touchend', function() {
         _this.drawEnd();
     }, false);
 
@@ -486,17 +484,6 @@ function buildElement(buildOptions) {
     // return if there is no object
     if (parentElm === null) return;
     parentElm.appendChild(createElm);
-}
-
-function findElementOnID(list, itemID) {
-    var currentItem;
-    list.forEach(function (item) {
-        if (item.id === 'canvas-1') {
-            currentItem = item;
-        }
-    });
-
-    return currentItem;
 }
 
 module.exports = drawChim;
