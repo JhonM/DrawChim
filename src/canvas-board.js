@@ -1,11 +1,9 @@
 'use strict';
 /* jshint node: true */
 
-var $$ = require('domquery');
 var ExtendDefault = require('./extend_default');
-var TemplateEngine = require('./template-engine');
 
-var CanvasBoard = function(options) {
+var CanvasBoard = function() {
     var defaults = {
         selector: null
     };
@@ -16,6 +14,7 @@ var CanvasBoard = function(options) {
 };
 
 CanvasBoard.prototype.createBoard = function(text) {
+    // eslint-disable-next-line no-console
     console.log('Hi just created this ' + text + ' for you');
 };
 

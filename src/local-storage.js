@@ -56,6 +56,7 @@ var LocalStorage = {
 
             return true;
         } catch (e) {
+            // eslint-disable-next-line no-console
             console.log('Unable to store ' + key + ' in localStorage due to ' + e.name);
 
             return false;
