@@ -46,8 +46,8 @@ var LocalStorage = {
 
         if (typeof expiry === 'number') {
             value = {
-            __data: value,
-            __expiry: Date.now() + (parseInt(expiry) * 1000)
+                __data: value,
+                __expiry: Date.now() + (parseInt(expiry) * 1000)
             };
         }
 
@@ -56,6 +56,7 @@ var LocalStorage = {
 
             return true;
         } catch (e) {
+            // eslint-disable-next-line no-console
             console.log('Unable to store ' + key + ' in localStorage due to ' + e.name);
 
             return false;
@@ -84,6 +85,6 @@ var LocalStorage = {
             return false;
         }
     }
-}
+};
 
 module.exports = LocalStorage;
