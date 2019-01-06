@@ -1,12 +1,11 @@
-import React, { Component } from "react";
-import ReactDOM from "react-dom";
-import Input from "../components/Header";
+import React, { Component } from 'react';
+import Input from '../components/Header';
 
 class App extends Component {
   constructor() {
     super();
     this.state = {
-      seo_title: ""
+      seo_title: ''
     };
     this.handleChange = this.handleChange.bind(this);
   }
