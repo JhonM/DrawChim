@@ -1,9 +1,12 @@
 {
   "name": "drawchim",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "DrawChim is a simple html5 based draw application. I made it for my son.",
   "main": "index.js",
-  "dependencies": {},
+  "dependencies": {
+    "konva": "^3.3.3",
+    "react-konva": "^16.8.7-3"
+  },
   "devDependencies": {
     "@babel/core": "^7.2.2",
     "@babel/preset-env": "^7.2.3",
