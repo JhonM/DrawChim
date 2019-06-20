@@ -1,13 +1,20 @@
 module.exports = {
     "env": {
         "browser": true,
-        "commonjs": true
+        "es6": true
     },
-    "extends": "eslint:recommended",
+   	"extends": [
+       "eslint:recommended",
+       "plugin:react/recommended"
+   	],
+    "parserOptions": {
+        "ecmaVersion": 2015,
+        "sourceType": "module"
+    },
     "rules": {
         "indent": [
             "error",
-            4
+            2
         ],
         "linebreak-style": [
             "error",

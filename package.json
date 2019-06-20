@@ -1,14 +1,19 @@
 {
   "name": "drawchim",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "DrawChim is a simple html5 based draw application. I made it for my son.",
   "main": "index.js",
-  "dependencies": {},
+  "dependencies": {
+    "konva": "^3.3.3",
+    "react-konva": "^16.8.7-3"
+  },
   "devDependencies": {
     "@babel/core": "^7.2.2",
     "@babel/preset-env": "^7.2.3",
     "@babel/preset-react": "^7.0.0",
     "babel-loader": "^8.0.5",
+    "eslint": "^5.12.0",
+    "eslint-plugin-react": "^7.12.3",
     "html-loader": "^0.5.5",
     "html-webpack-plugin": "^3.2.0",
     "prop-types": "^15.6.2",
@@ -20,7 +25,7 @@
   },
   "scripts": {
     "build": "webpack --mode production",
-	"start": "webpack-dev-server --open --mode development"
+    "start": "webpack-dev-server --open --mode development"
   },
   "repository": {
     "type": "git",
