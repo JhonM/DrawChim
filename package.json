@@ -5,7 +5,8 @@
   "main": "index.js",
   "dependencies": {
     "konva": "^3.3.3",
-    "react-konva": "^16.8.7-3"
+    "react-konva": "^16.8.7-3",
+    "styled-components": "^4.3.2"
   },
   "devDependencies": {
     "@babel/core": "^7.2.2",
