@@ -7,8 +7,11 @@ class Canvas extends Component {
     super(props);
     this.state = {
       isDrawing: false,
-      mode: 'bruse',
     }
+
+    this.handleMouseDown = this.handleMouseDown.bind(this);
+    this.handleMouseMove = this.handleMouseMove.bind(this);
+    this.handleMouseUp = this.handleMouseUp.bind(this);
   }
 
   componentDidMount() {
@@ -18,26 +21,26 @@ class Canvas extends Component {
     const context = canvas.getContext('2d');
 
     this.setState({ canvas, context });
+    this.setState({ mode: this.props.tool });
   }
 
-  handleMouseDown(context) {
-    console.log('mousedown');
-    context.setState({ isDrawing: true });
+  handleMouseDown() {
+    this.setState({ isDrawing: true });
 
     const stage = this.image.parent.parent;
-    context.lastPointerPosition = stage.getPointerPosition();
+    this.lastPointerPosition = stage.getPointerPosition();
   }
 
-  handleMouseUp(context) {
-   console.log('mouseup');
-   context.setState({ isDrawing: false });
+  handleMouseUp() {
+    this.setState({ isDrawing: false });
   }
 
-  handleMouseMove(e) {
-    const { context, isDrawing, mode } = e.state;
+  handleMouseMove() {
+    const mode = this.props.tool;
+    const { context, isDrawing } = this.state;
 
     if (isDrawing) {
-      console.log('drawing');
+      // console.log('drawing');
 
       context.strokeStyle = '#000';
       context.lineJoin = 'round';
@@ -52,28 +55,28 @@ class Canvas extends Component {
       context.beginPath();
 
       var localPos = {
-        x: e.lastPointerPosition.x - e.image.x(),
-        y: e.lastPointerPosition.y - e.image.y(),
+        x: this.lastPointerPosition.x - this.image.x(),
+        y: this.lastPointerPosition.y - this.image.y(),
       }
 
-      console.log('Move to', localPos);
+      // console.log('Move to', localPos);
       context.moveTo(localPos.x, localPos.y);
-      console.log('context', context);
+      // console.log('context', context);
 
-      const stage = e.image.parent.parent;
+      const stage = this.image.parent.parent;
 
       var pos = stage.getPointerPosition();
       localPos = {
-        x: pos.x - e.image.x(),
-        y: pos.y - e.image.y(),
+        x: pos.x - this.image.x(),
+        y: pos.y - this.image.y(),
       }
 
-      console.log('line to', localPos);
+      // console.log('line to', localPos);
       context.lineTo(localPos.x, localPos.y);
       context.closePath();
       context.stroke();
-      e.lastPointerPosition = pos;
-      e.image.getLayer().draw();
+      this.lastPointerPosition = pos;
+      this.image.getLayer().draw();
     }
   }
 
@@ -93,9 +96,9 @@ class Canvas extends Component {
             width={window.innerWidth}
             height={window.innerHeight}
             stroke='blue'
-            onMouseDown={() => this.handleMouseDown(this)}
-            onMouseUp={() => this.handleMouseUp(this)}
-            onMouseMove={() => this.handleMouseMove(this)}
+            onMouseDown={this.handleMouseDown}
+            onMouseUp={this.handleMouseUp}
+            onMouseMove={this.handleMouseMove}
            />
         </Layer>
       </Stage>
