@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Stage, Layer, Image } from 'react-konva'
+import { Stage, Layer, Image } from 'react-konva';
 import PropTypes from 'prop-types';
 
 class Canvas extends Component {
@@ -7,7 +7,7 @@ class Canvas extends Component {
     super(props);
     this.state = {
       isDrawing: false,
-    }
+    };
 
     this.handleMouseDown = this.handleMouseDown.bind(this);
     this.handleMouseMove = this.handleMouseMove.bind(this);
@@ -17,7 +17,7 @@ class Canvas extends Component {
   componentDidMount() {
     const canvas = document.createElement('canvas');
     canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight
+    canvas.height = window.innerHeight;
     const context = canvas.getContext('2d');
 
     this.setState({ canvas, context });
@@ -48,7 +48,7 @@ class Canvas extends Component {
 
       if (mode === 'brush') {
         context.globalCompositeOperation = 'source-over';
-      } else if (mode === "eraser") {
+      } else if (mode === 'eraser') {
         context.globalCompositeOperation = 'destination-out';
       }
 
@@ -57,7 +57,7 @@ class Canvas extends Component {
       var localPos = {
         x: this.lastPointerPosition.x - this.image.x(),
         y: this.lastPointerPosition.y - this.image.y(),
-      }
+      };
 
       // console.log('Move to', localPos);
       context.moveTo(localPos.x, localPos.y);
@@ -69,7 +69,7 @@ class Canvas extends Component {
       localPos = {
         x: pos.x - this.image.x(),
         y: pos.y - this.image.y(),
-      }
+      };
 
       // console.log('line to', localPos);
       context.lineTo(localPos.x, localPos.y);
@@ -85,21 +85,18 @@ class Canvas extends Component {
     console.log('canvas', canvas);
 
     return (
-    <Stage
-      width={window.innerWidth}
-      height={window.innerHeight}
-    >
+      <Stage width={window.innerWidth} height={window.innerHeight}>
         <Layer>
-           <Image
+          <Image
             image={canvas}
             ref={node => (this.image = node)}
             width={window.innerWidth}
             height={window.innerHeight}
-            stroke='blue'
+            stroke="blue"
             onMouseDown={this.handleMouseDown}
             onMouseUp={this.handleMouseUp}
             onMouseMove={this.handleMouseMove}
-           />
+          />
         </Layer>
       </Stage>
     );
