@@ -7,6 +7,9 @@ class Canvas extends Component {
     super(props);
     this.state = {
       isDrawing: false,
+      mode: 'brush',
+      color: '#000',
+      lineWidth: 5,
     };
 
     this.handleMouseDown = this.handleMouseDown.bind(this);
@@ -42,9 +45,9 @@ class Canvas extends Component {
     if (isDrawing) {
       // console.log('drawing');
 
-      context.strokeStyle = '#000';
+      context.strokeStyle = this.props.color || this.state.color;
       context.lineJoin = 'round';
-      context.lineWidth = 5;
+      context.lineWidth = this.props.lineWidth || this.state.lineWidth;
 
       if (mode === 'brush') {
         context.globalCompositeOperation = 'source-over';
@@ -82,7 +85,6 @@ class Canvas extends Component {
 
   render() {
     const { canvas } = this.state;
-    console.log('canvas', canvas);
 
     return (
       <Stage width={window.innerWidth} height={window.innerHeight}>
