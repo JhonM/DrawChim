@@ -14,6 +14,8 @@
     "@babel/preset-react": "^7.8.3",
     "babel-jest": "^24.9.0",
     "babel-loader": "^8.0.5",
+    "enzyme": "^3.11.0",
+    "enzyme-adapter-react-16": "^1.15.2",
     "eslint": "^5.12.0",
     "eslint-config-prettier": "^6.0.0",
     "eslint-plugin-prettier": "^3.1.0",
@@ -32,7 +34,8 @@
   },
   "scripts": {
     "build": "webpack --mode production",
-    "start": "webpack-dev-server --open --mode development"
+    "start": "webpack-dev-server --open --mode development",
+    "test": "jest"
   },
   "repository": {
     "type": "git",
