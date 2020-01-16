@@ -1,0 +1,23 @@
+name: Test
+
+on: [push]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: ['8', '10', '12']
+
+    steps:
+    - uses: actions/checkout@v1
+    - name: install yarn
+    - uses: borales/actions-yarn@v2.0.0
+      with:
+        cmd: install
+    - name: run tests
+    - uses: borales/actions-yarn@v2.0.0
+      with:
+        cmd: test
