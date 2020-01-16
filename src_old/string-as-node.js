@@ -10,7 +10,7 @@ module.exports = function(element, html) {
 
     tmp.innerHTML = html;
 
-    while (child = tmp.firstChild) {
+    while ((child = tmp.firstChild)) {
         frag.appendChild(child);
     }
 
