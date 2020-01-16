@@ -21,3 +21,8 @@ jobs:
     - uses: borales/actions-yarn@v2.0.0
       with:
         cmd: test
+      run: |
+        yarn
+        yarn test
+      env:
+        CI: true
