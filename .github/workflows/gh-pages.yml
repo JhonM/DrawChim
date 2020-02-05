@@ -1,0 +1,31 @@
+name: Github Pages
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  build-deploy:
+
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [12.x]
+
+    steps:
+    - uses: actions/checkout@v1
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v1
+      with:
+        node-version: ${{ matrix.node-version }}
+    - run: npm install -g yarn
+    - name: yarn install and test
+      run: |
+        yarn build
+    - name: Deploy,
+      uses: peaceiris/actions-gh-pages@v3
+      with:
+        deploy-key: ${{ secrets.ACTIONS_DEPLOY_KEY }}
+        publish_dir: ./docs
