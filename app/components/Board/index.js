@@ -45,7 +45,7 @@ class Board extends Component {
               </li>
               <li>
                 <label>
-                  <big>color</big>
+                  <big>color: </big>
                   <input
                     name="color"
                     type="color"
