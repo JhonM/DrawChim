@@ -32,3 +32,4 @@ jobs:
         publish_dir: ./docs
         user_name: JhonM
         user_email: jhonmajoor@gmail.com
+        allow_empty_commit: true
