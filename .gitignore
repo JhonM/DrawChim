@@ -1,6 +1,9 @@
 node_modules/
 .sass-cache/
 dist/*
+docs/*
 *.map
 *.DS_Store
 npm-debug.log
+gh-pages
+gh-pages.pub
