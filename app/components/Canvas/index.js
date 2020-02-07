@@ -8,7 +8,7 @@ class Canvas extends Component {
     this.state = {
       isDrawing: false,
       mode: 'brush',
-      color: '#000',
+      color: '#000000',
       lineWidth: 5,
     };
 

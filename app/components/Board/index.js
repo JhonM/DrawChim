@@ -9,7 +9,7 @@ class Board extends Component {
 
     this.state = {
       tool: 'brush',
-      color: '#000',
+      color: '#000000',
       lineWidth: 5,
     };
   }
