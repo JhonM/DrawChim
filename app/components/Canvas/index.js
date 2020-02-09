@@ -39,48 +39,53 @@ class Canvas extends Component {
   }
 
   handleMouseMove() {
-    const mode = this.props.tool;
-    const { context, isDrawing } = this.state;
+    const { isDrawing } = this.state;
 
     if (isDrawing) {
-      // console.log('drawing');
-
-      context.strokeStyle = this.props.color || this.state.color;
-      context.lineJoin = 'round';
-      context.lineWidth = this.props.lineWidth || this.state.lineWidth;
-
-      if (mode === 'brush') {
-        context.globalCompositeOperation = 'source-over';
-      } else if (mode === 'eraser') {
-        context.globalCompositeOperation = 'destination-out';
-      }
-
-      context.beginPath();
-
-      var localPos = {
-        x: this.lastPointerPosition.x - this.image.x(),
-        y: this.lastPointerPosition.y - this.image.y(),
-      };
-
-      // console.log('Move to', localPos);
-      context.moveTo(localPos.x, localPos.y);
-      // console.log('context', context);
-
-      const stage = this.image.parent.parent;
-
-      var pos = stage.getPointerPosition();
-      localPos = {
-        x: pos.x - this.image.x(),
-        y: pos.y - this.image.y(),
-      };
-
-      // console.log('line to', localPos);
-      context.lineTo(localPos.x, localPos.y);
-      context.closePath();
-      context.stroke();
-      this.lastPointerPosition = pos;
-      this.image.getLayer().draw();
+      this.draw();
     }
+  }
+
+  draw() {
+    const mode = this.props.tool;
+    const { context } = this.state;
+    // console.log('drawing');
+
+    context.strokeStyle = this.props.color || this.state.color;
+    context.lineJoin = 'round';
+    context.lineWidth = this.props.lineWidth || this.state.lineWidth;
+
+    if (mode === 'brush') {
+      context.globalCompositeOperation = 'source-over';
+    } else if (mode === 'eraser') {
+      context.globalCompositeOperation = 'destination-out';
+    }
+
+    context.beginPath();
+
+    var localPos = {
+      x: this.lastPointerPosition.x - this.image.x(),
+      y: this.lastPointerPosition.y - this.image.y(),
+    };
+
+    // console.log('Move to', localPos);
+    context.moveTo(localPos.x, localPos.y);
+    // console.log('context', context);
+
+    const stage = this.image.parent.parent;
+
+    var pos = stage.getPointerPosition();
+    localPos = {
+      x: pos.x - this.image.x(),
+      y: pos.y - this.image.y(),
+    };
+
+    // console.log('line to', localPos);
+    context.lineTo(localPos.x, localPos.y);
+    context.closePath();
+    context.stroke();
+    this.lastPointerPosition = pos;
+    this.image.getLayer().draw();
   }
 
   render() {

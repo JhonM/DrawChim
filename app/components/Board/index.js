@@ -21,6 +21,10 @@ class Board extends Component {
   handleChange(type, e, context) {
     context.setState({ [type]: e.target.value });
   }
+
+  handleUndo() {
+    debugger;
+  }
   render() {
     return (
       <div>
