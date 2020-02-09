@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { Stage, Layer, Image } from 'react-konva';
 import PropTypes from 'prop-types';
+import Line from './Line';
+import Tool from './Tools';
 
 class Canvas extends Component {
   constructor(props) {
@@ -8,7 +10,7 @@ class Canvas extends Component {
     this.state = {
       isDrawing: false,
       mode: 'brush',
-      color: '#000',
+      color: '#000000',
       lineWidth: 5,
     };
 
@@ -17,70 +19,45 @@ class Canvas extends Component {
     this.handleMouseUp = this.handleMouseUp.bind(this);
   }
 
+  _initTools(canvas) {
+    this._tools = {};
+    this._tools[Tool.Line] = new Line(canvas);
+  }
+
   componentDidMount() {
     const canvas = document.createElement('canvas');
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
-    const context = canvas.getContext('2d');
 
-    this.setState({ canvas, context });
+    this._initTools(canvas);
+    let selectedTool = this._tools['line']; // hardcode for now
+    selectedTool.configureCanvas(this.props);
+    this._selectedTool = selectedTool;
+
+    this.setState({ canvas });
     this.setState({ mode: this.props.tool });
   }
 
-  handleMouseDown() {
-    this.setState({ isDrawing: true });
-
-    const stage = this.image.parent.parent;
-    this.lastPointerPosition = stage.getPointerPosition();
+  componentDidUpdate() {
+    this._selectedTool.configureCanvas(this.props);
   }
 
-  handleMouseUp() {
-    this.setState({ isDrawing: false });
+  handleMouseDown(e) {
+    const parent = this.image.parent.parent;
+    this._selectedTool.onMouseDown(e, parent);
   }
 
-  handleMouseMove() {
-    const mode = this.props.tool;
-    const { context, isDrawing } = this.state;
+  handleMouseUp(e) {
+    this._selectedTool.onMouseUp(e);
+  }
 
-    if (isDrawing) {
-      // console.log('drawing');
+  handleMouseMove(e) {
+    const image = this.image;
+    this._selectedTool.onMouseMove(e, image);
+  }
 
-      context.strokeStyle = this.props.color || this.state.color;
-      context.lineJoin = 'round';
-      context.lineWidth = this.props.lineWidth || this.state.lineWidth;
-
-      if (mode === 'brush') {
-        context.globalCompositeOperation = 'source-over';
-      } else if (mode === 'eraser') {
-        context.globalCompositeOperation = 'destination-out';
-      }
-
-      context.beginPath();
-
-      var localPos = {
-        x: this.lastPointerPosition.x - this.image.x(),
-        y: this.lastPointerPosition.y - this.image.y(),
-      };
-
-      // console.log('Move to', localPos);
-      context.moveTo(localPos.x, localPos.y);
-      // console.log('context', context);
-
-      const stage = this.image.parent.parent;
-
-      var pos = stage.getPointerPosition();
-      localPos = {
-        x: pos.x - this.image.x(),
-        y: pos.y - this.image.y(),
-      };
-
-      // console.log('line to', localPos);
-      context.lineTo(localPos.x, localPos.y);
-      context.closePath();
-      context.stroke();
-      this.lastPointerPosition = pos;
-      this.image.getLayer().draw();
-    }
+  undo() {
+    debugger;
   }
 
   render() {
