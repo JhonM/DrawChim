@@ -12,6 +12,8 @@ class Board extends Component {
       color: '#000000',
       lineWidth: 5,
     };
+
+    this.child = React.createRef();
   }
 
   handleEraser(e, context) {
@@ -23,7 +25,7 @@ class Board extends Component {
   }
 
   handleUndo() {
-    debugger;
+    this.child.current.testFunction();
   }
   render() {
     return (
@@ -45,6 +47,11 @@ class Board extends Component {
                   data-info="eraser"
                 >
                   Eraser
+                </button>
+              </li>
+              <li>
+                <button onClick={() => this.handleUndo()} data-info="eraser">
+                  Undo
                 </button>
               </li>
               <li>
@@ -75,6 +82,7 @@ class Board extends Component {
           </Nav>
         </Header>
         <Canvas
+          ref={this.child}
           tool={this.state.tool}
           color={this.state.color}
           lineWidth={this.state.lineWidth}
