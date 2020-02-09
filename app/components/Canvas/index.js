@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Stage, Layer, Image } from 'react-konva';
 import PropTypes from 'prop-types';
-import Line from './Line';
+import Pencil from './Pencil';
 import Tool from './Tools';
 
 class Canvas extends Component {
@@ -21,7 +21,7 @@ class Canvas extends Component {
 
   _initTools(canvas) {
     this._tools = {};
-    this._tools[Tool.Line] = new Line(canvas);
+    this._tools[Tool.Pencil] = new Pencil(canvas);
   }
 
   componentDidMount() {
@@ -30,7 +30,7 @@ class Canvas extends Component {
     canvas.height = window.innerHeight;
 
     this._initTools(canvas);
-    let selectedTool = this._tools['line']; // hardcode for now
+    let selectedTool = this._tools['pencil']; // hardcode for now
     selectedTool.configureCanvas(this.props);
     this._selectedTool = selectedTool;
 
