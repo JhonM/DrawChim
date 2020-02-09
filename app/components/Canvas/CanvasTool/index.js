@@ -2,7 +2,6 @@
 
 class CanvasTool {
   constructor(canvas) {
-    debugger;
     this._canvas = canvas;
   }
 

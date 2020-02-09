@@ -1,16 +1,10 @@
-import { Component } from 'react';
-import PropTypes from 'prop-types';
+import CanvasTool from '../CanvasTool';
 
-class Line extends Component {
+class Line extends CanvasTool {
   configureCanvas(props) {
-    debugger;
-    // const canvas = document.createElement('canvas');
-    // canvas.width = window.innerWidth;
-    // canvas.height = window.innerHeight;
-    // const context = canvas.getContext('2d');
-
-    // this.setState({ canvas, context });
-    // this.setState({ mode: this.props.tool });
+    this._tool = props.tool;
+    this._color = props.color;
+    this._lineWidth = props.lineWidth;
   }
 
   onMouseDown(e, parent) {
@@ -33,13 +27,13 @@ class Line extends Component {
   }
 
   draw(image) {
-    const mode = this.props.tool;
+    const mode = this._tool;
     const context = this._canvas.getContext('2d');
     // console.log('drawing');
 
-    context.strokeStyle = this.props.color || this.state.color;
+    context.strokeStyle = this._color || this.state.color;
     context.lineJoin = 'round';
-    context.lineWidth = this.props.lineWidth || this.state.lineWidth;
+    context.lineWidth = this._lineWidth || this.state.lineWidth;
 
     if (mode === 'brush') {
       context.globalCompositeOperation = 'source-over';
@@ -74,9 +68,5 @@ class Line extends Component {
     image.getLayer().draw();
   }
 }
-
-Line.propTypes = {
-  children: PropTypes.string,
-};
 
 export default Line;

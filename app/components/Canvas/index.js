@@ -28,15 +28,18 @@ class Canvas extends Component {
     const canvas = document.createElement('canvas');
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
-    const context = canvas.getContext('2d');
 
     this._initTools(canvas);
     let selectedTool = this._tools['line']; // hardcode for now
     selectedTool.configureCanvas(this.props);
     this._selectedTool = selectedTool;
 
-    this.setState({ canvas, context });
+    this.setState({ canvas });
     this.setState({ mode: this.props.tool });
+  }
+
+  componentDidUpdate() {
+    this._selectedTool.configureCanvas(this.props);
   }
 
   handleMouseDown(e) {
