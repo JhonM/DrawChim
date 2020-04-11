@@ -1,0 +1,15 @@
+name: Slack Notification
+
+on: push
+
+jobs:
+  slack-notification:
+    name: Slack Notification
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Slack Notification
+      uses: rtCamp/action-slack-notify@v2.0.0
+      env:
+        SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
